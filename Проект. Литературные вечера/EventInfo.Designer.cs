@@ -28,86 +28,78 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.editbtn1 = new System.Windows.Forms.Button();
-            this.infoOfEvent = new System.Windows.Forms.TextBox();
-            this.nameOfEvent = new System.Windows.Forms.TextBox();
-            this.cotegoryInfoEvent = new System.Windows.Forms.TextBox();
-            this.dateInfoEvent = new System.Windows.Forms.TextBox();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblCategory = new System.Windows.Forms.Label();
+            this.lblDate = new System.Windows.Forms.Label();
+            this.txtDescription = new System.Windows.Forms.TextBox();
+            this.btnEdit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // editbtn1
+            // lblTitle
             // 
-            this.editbtn1.Location = new System.Drawing.Point(541, 539);
-            this.editbtn1.Name = "editbtn1";
-            this.editbtn1.Size = new System.Drawing.Size(203, 29);
-            this.editbtn1.TabIndex = 0;
-            this.editbtn1.Text = "Редактировать событие";
-            this.editbtn1.UseVisualStyleBackColor = true;
-            this.editbtn1.Click += new System.EventHandler(this.editbtn1_Click);
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.lblTitle.Location = new System.Drawing.Point(196, 55);
+            this.lblTitle.MaximumSize = new System.Drawing.Size(1000, 1000);
+            this.lblTitle.MinimumSize = new System.Drawing.Size(400, 40);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(400, 40);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // infoOfEvent
+            // lblCategory
             // 
-            this.infoOfEvent.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.infoOfEvent.Location = new System.Drawing.Point(111, 196);
-            this.infoOfEvent.Multiline = true;
-            this.infoOfEvent.Name = "infoOfEvent";
-            this.infoOfEvent.ReadOnly = true;
-            this.infoOfEvent.Size = new System.Drawing.Size(576, 311);
-            this.infoOfEvent.TabIndex = 2;
-            this.infoOfEvent.Text = "Информация о событии";
-            this.infoOfEvent.TextChanged += new System.EventHandler(this.infoOfEvent_TextChanged);
+            this.lblCategory.AutoSize = true;
+            this.lblCategory.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.lblCategory.Location = new System.Drawing.Point(379, 127);
+            this.lblCategory.MinimumSize = new System.Drawing.Size(150, 30);
+            this.lblCategory.Name = "lblCategory";
+            this.lblCategory.Size = new System.Drawing.Size(150, 30);
+            this.lblCategory.TabIndex = 1;
+            this.lblCategory.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // nameOfEvent
+            // lblDate
             // 
-            this.nameOfEvent.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.nameOfEvent.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.nameOfEvent.Location = new System.Drawing.Point(130, 68);
-            this.nameOfEvent.Multiline = true;
-            this.nameOfEvent.Name = "nameOfEvent";
-            this.nameOfEvent.ReadOnly = true;
-            this.nameOfEvent.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.nameOfEvent.Size = new System.Drawing.Size(526, 44);
-            this.nameOfEvent.TabIndex = 3;
-            this.nameOfEvent.Text = "Название события";
-            this.nameOfEvent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.nameOfEvent.UseWaitCursor = true;
+            this.lblDate.AutoSize = true;
+            this.lblDate.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.lblDate.Location = new System.Drawing.Point(558, 127);
+            this.lblDate.MinimumSize = new System.Drawing.Size(200, 30);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(200, 30);
+            this.lblDate.TabIndex = 2;
+            this.lblDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // cotegoryInfoEvent
+            // txtDescription
             // 
-            this.cotegoryInfoEvent.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.cotegoryInfoEvent.Location = new System.Drawing.Point(326, 132);
-            this.cotegoryInfoEvent.Multiline = true;
-            this.cotegoryInfoEvent.Name = "cotegoryInfoEvent";
-            this.cotegoryInfoEvent.ReadOnly = true;
-            this.cotegoryInfoEvent.Size = new System.Drawing.Size(171, 30);
-            this.cotegoryInfoEvent.TabIndex = 5;
-            this.cotegoryInfoEvent.Text = "Категория";
-            this.cotegoryInfoEvent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtDescription.BackColor = System.Drawing.Color.Silver;
+            this.txtDescription.ForeColor = System.Drawing.SystemColors.Window;
+            this.txtDescription.Location = new System.Drawing.Point(106, 185);
+            this.txtDescription.Multiline = true;
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.ReadOnly = true;
+            this.txtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtDescription.Size = new System.Drawing.Size(610, 360);
+            this.txtDescription.TabIndex = 3;
             // 
-            // dateInfoEvent
+            // btnEdit
             // 
-            this.dateInfoEvent.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dateInfoEvent.Location = new System.Drawing.Point(521, 132);
-            this.dateInfoEvent.Multiline = true;
-            this.dateInfoEvent.Name = "dateInfoEvent";
-            this.dateInfoEvent.ReadOnly = true;
-            this.dateInfoEvent.Size = new System.Drawing.Size(166, 30);
-            this.dateInfoEvent.TabIndex = 6;
-            this.dateInfoEvent.Text = "Дата проведения";
-            this.dateInfoEvent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.btnEdit.Location = new System.Drawing.Point(549, 574);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(223, 28);
+            this.btnEdit.TabIndex = 4;
+            this.btnEdit.Text = "Редактировать событие";
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click_1);
             // 
             // EventInfo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(818, 625);
-            this.Controls.Add(this.dateInfoEvent);
-            this.Controls.Add(this.cotegoryInfoEvent);
-            this.Controls.Add(this.nameOfEvent);
-            this.Controls.Add(this.infoOfEvent);
-            this.Controls.Add(this.editbtn1);
+            this.ClientSize = new System.Drawing.Size(831, 654);
+            this.Controls.Add(this.btnEdit);
+            this.Controls.Add(this.txtDescription);
+            this.Controls.Add(this.lblDate);
+            this.Controls.Add(this.lblCategory);
+            this.Controls.Add(this.lblTitle);
             this.Name = "EventInfo";
-            this.Text = "EnentInfo";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,10 +107,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Button editbtn1;
-        private System.Windows.Forms.TextBox infoOfEvent;
-        private System.Windows.Forms.TextBox nameOfEvent;
-        private System.Windows.Forms.TextBox cotegoryInfoEvent;
-        private System.Windows.Forms.TextBox dateInfoEvent;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblCategory;
+        private System.Windows.Forms.Label lblDate;
+        private System.Windows.Forms.TextBox txtDescription;
+        private System.Windows.Forms.Button btnEdit;
     }
 }

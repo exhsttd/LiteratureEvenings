@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.unloadBtnCreator = new System.Windows.Forms.Button();
-            this.deleteBtnCreator = new System.Windows.Forms.Button();
             this.loadBtnCreator = new System.Windows.Forms.Button();
             this.infoOfEventCreator = new System.Windows.Forms.TextBox();
             this.comboBoxCreator = new System.Windows.Forms.ComboBox();
@@ -44,21 +43,13 @@
             // 
             // unloadBtnCreator
             // 
-            this.unloadBtnCreator.Location = new System.Drawing.Point(350, 559);
+            this.unloadBtnCreator.Location = new System.Drawing.Point(67, 559);
             this.unloadBtnCreator.Name = "unloadBtnCreator";
             this.unloadBtnCreator.Size = new System.Drawing.Size(182, 29);
             this.unloadBtnCreator.TabIndex = 23;
             this.unloadBtnCreator.Text = "Отменить изменения";
             this.unloadBtnCreator.UseVisualStyleBackColor = true;
-            // 
-            // deleteBtnCreator
-            // 
-            this.deleteBtnCreator.Location = new System.Drawing.Point(67, 559);
-            this.deleteBtnCreator.Name = "deleteBtnCreator";
-            this.deleteBtnCreator.Size = new System.Drawing.Size(150, 29);
-            this.deleteBtnCreator.TabIndex = 22;
-            this.deleteBtnCreator.Text = "Удалить событие";
-            this.deleteBtnCreator.UseVisualStyleBackColor = true;
+            this.unloadBtnCreator.Click += new System.EventHandler(this.unloadBtnCreator_Click);
             // 
             // loadBtnCreator
             // 
@@ -68,6 +59,7 @@
             this.loadBtnCreator.TabIndex = 21;
             this.loadBtnCreator.Text = "Создать событие";
             this.loadBtnCreator.UseVisualStyleBackColor = true;
+            this.loadBtnCreator.Click += new System.EventHandler(this.loadBtnCreator_Click);
             // 
             // infoOfEventCreator
             // 
@@ -168,7 +160,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 666);
             this.Controls.Add(this.unloadBtnCreator);
-            this.Controls.Add(this.deleteBtnCreator);
             this.Controls.Add(this.loadBtnCreator);
             this.Controls.Add(this.infoOfEventCreator);
             this.Controls.Add(this.comboBoxCreator);
@@ -189,7 +180,6 @@
         #endregion
 
         private System.Windows.Forms.Button unloadBtnCreator;
-        private System.Windows.Forms.Button deleteBtnCreator;
         private System.Windows.Forms.Button loadBtnCreator;
         private System.Windows.Forms.TextBox infoOfEventCreator;
         private System.Windows.Forms.ComboBox comboBoxCreator;

@@ -35,10 +35,9 @@
             this.textBoxEventEditor5 = new System.Windows.Forms.TextBox();
             this.nameOfEventChange = new System.Windows.Forms.TextBox();
             this.dateTimePickerEditor = new System.Windows.Forms.DateTimePicker();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbCategory = new System.Windows.Forms.ComboBox();
             this.infoOfEventChange = new System.Windows.Forms.TextBox();
             this.loadBtnEditor = new System.Windows.Forms.Button();
-            this.deleteBtnEditor = new System.Windows.Forms.Button();
             this.unloadBtnEditor = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -117,17 +116,17 @@
             this.dateTimePickerEditor.TabIndex = 6;
             this.dateTimePickerEditor.ValueChanged += new System.EventHandler(this.dateTimePickerEditor_ValueChanged);
             // 
-            // comboBox1
+            // cmbCategory
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cmbCategory.FormattingEnabled = true;
+            this.cmbCategory.Items.AddRange(new object[] {
             "Тема 1",
             "Тема 2",
             "Тема 3"});
-            this.comboBox1.Location = new System.Drawing.Point(269, 291);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(177, 24);
-            this.comboBox1.TabIndex = 7;
+            this.cmbCategory.Location = new System.Drawing.Point(269, 291);
+            this.cmbCategory.Name = "cmbCategory";
+            this.cmbCategory.Size = new System.Drawing.Size(177, 24);
+            this.cmbCategory.TabIndex = 7;
             // 
             // infoOfEventChange
             // 
@@ -148,16 +147,6 @@
             this.loadBtnEditor.UseVisualStyleBackColor = true;
             this.loadBtnEditor.Click += new System.EventHandler(this.loadBtnEditor_Click);
             // 
-            // deleteBtnEditor
-            // 
-            this.deleteBtnEditor.Location = new System.Drawing.Point(64, 570);
-            this.deleteBtnEditor.Name = "deleteBtnEditor";
-            this.deleteBtnEditor.Size = new System.Drawing.Size(150, 29);
-            this.deleteBtnEditor.TabIndex = 10;
-            this.deleteBtnEditor.Text = "Удалить событие";
-            this.deleteBtnEditor.UseVisualStyleBackColor = true;
-            this.deleteBtnEditor.Click += new System.EventHandler(this.deleteBtnEditor_Click);
-            // 
             // unloadBtnEditor
             // 
             this.unloadBtnEditor.Location = new System.Drawing.Point(347, 570);
@@ -174,10 +163,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 661);
             this.Controls.Add(this.unloadBtnEditor);
-            this.Controls.Add(this.deleteBtnEditor);
             this.Controls.Add(this.loadBtnEditor);
             this.Controls.Add(this.infoOfEventChange);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cmbCategory);
             this.Controls.Add(this.dateTimePickerEditor);
             this.Controls.Add(this.nameOfEventChange);
             this.Controls.Add(this.textBoxEventEditor5);
@@ -201,10 +189,9 @@
         private System.Windows.Forms.TextBox textBoxEventEditor5;
         private System.Windows.Forms.TextBox nameOfEventChange;
         private System.Windows.Forms.DateTimePicker dateTimePickerEditor;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbCategory;
         private System.Windows.Forms.TextBox infoOfEventChange;
         private System.Windows.Forms.Button loadBtnEditor;
-        private System.Windows.Forms.Button deleteBtnEditor;
         private System.Windows.Forms.Button unloadBtnEditor;
     }
 }
