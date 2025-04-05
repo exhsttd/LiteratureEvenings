@@ -69,9 +69,11 @@
             this.infoOfEventCreator.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.infoOfEventCreator.Size = new System.Drawing.Size(395, 184);
             this.infoOfEventCreator.TabIndex = 20;
+            this.infoOfEventCreator.TextChanged += new System.EventHandler(this.infoOfEventCreator_TextChanged);
             // 
             // comboBoxCreator
             // 
+            this.comboBoxCreator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCreator.FormattingEnabled = true;
             this.comboBoxCreator.Items.AddRange(new object[] {
             "Тема 1",
@@ -81,6 +83,7 @@
             this.comboBoxCreator.Name = "comboBoxCreator";
             this.comboBoxCreator.Size = new System.Drawing.Size(177, 24);
             this.comboBoxCreator.TabIndex = 19;
+            this.comboBoxCreator.SelectedIndexChanged += new System.EventHandler(this.comboBoxCreator_SelectedIndexChanged);
             // 
             // dateTimePickerCreator
             // 
@@ -96,6 +99,7 @@
             this.nameOfEventCreator.Name = "nameOfEventCreator";
             this.nameOfEventCreator.Size = new System.Drawing.Size(395, 22);
             this.nameOfEventCreator.TabIndex = 17;
+            this.nameOfEventCreator.TextChanged += new System.EventHandler(this.nameOfEventCreator_TextChanged);
             // 
             // textBoxEventCreator5
             // 

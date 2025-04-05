@@ -1,36 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Build.Framework.XamlTypes;
+using Проект.Литературные_вечера.Data;
 
 namespace Проект.Литературные_вечера
 {
     public partial class EventCreator : Form
     {
-        public string Title { get; private set; }
-        public DateTime Date { get; private set; }
-        public string Category { get; private set; }
-        public string Description { get; private set; }
-        public EventCreator()
+        private readonly AppDbContext _dbContext;
+
+        public EventCreator(AppDbContext dbContext)
         {
             InitializeComponent();
+            dateTimePickerCreator.MinDate = DateTime.Today;
+            _dbContext = dbContext;
+            LoadCategories();
+        }
+
+        private void LoadCategories()
+        {
+            try
+            {
+                var categories = _dbContext.Events
+                    .Select(e => e.Category)
+                    .Distinct()
+                    .OrderBy(c => c)
+                    .ToArray();
+
+                comboBoxCreator.Items.AddRange(categories);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки категорий: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void unloadBtnCreator_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Вы хотите отменить изменения?", "Подтверждение",
-            MessageBoxButtons.YesNo) == DialogResult.Yes)
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                this.Title = nameOfEventCreator.Text;
-                this.Date = dateTimePickerCreator.Value;
-                this.Category = comboBoxCreator.Text;
-                this.Description = infoOfEventCreator.Text;
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
             }
@@ -38,20 +50,129 @@ namespace Проект.Литературные_вечера
 
         private void loadBtnCreator_Click(object sender, EventArgs e)
         {
+            if (!ValidateFields())
+                return;
+
+            try
+            {
+                var newEvent = new Event
+                {
+                    Title = nameOfEventCreator.Text,
+                    Date = dateTimePickerCreator.Value.Date,
+                    Time = dateTimePickerCreator.Value.TimeOfDay,
+                    Category = comboBoxCreator.SelectedItem.ToString(),
+                    Description = infoOfEventCreator.Text
+                };
+
+                _dbContext.Events.Add(newEvent);
+                _dbContext.SaveChanges();
+
+                MessageBox.Show("Событие успешно создано!", "Успех",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при создании события: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private bool ValidateFields()
+        {
+            ResetFieldHints();
+            bool isValid = true;
+
             if (string.IsNullOrWhiteSpace(nameOfEventCreator.Text))
             {
-                MessageBox.Show("Введите название события!");
-                return;
+                nameOfEventCreator.Text = "Заполните поле";
+                nameOfEventCreator.ForeColor = Color.Red;
+                isValid = false;
             }
 
-            // Сохраняем значения
-            this.Title = nameOfEventCreator.Text;
-            this.Date = dateTimePickerCreator.Value;
-            this.Category = comboBoxCreator.SelectedItem?.ToString();
-            this.Description = infoOfEventCreator.Text;
+            if (comboBoxCreator.SelectedIndex == -1)
+            {
+                MessageBox.Show("Выберите категорию!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                comboBoxCreator.Focus();
+                isValid = false;
+            }
 
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            if (string.IsNullOrWhiteSpace(infoOfEventCreator.Text))
+            {
+                infoOfEventCreator.Text = "Заполните поле";
+                infoOfEventCreator.ForeColor = Color.Red;
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        private void ResetFieldHints()
+        {
+            if (nameOfEventCreator.Text == "Заполните поле")
+            {
+                nameOfEventCreator.Text = "";
+                nameOfEventCreator.ForeColor = SystemColors.WindowText;
+            }
+
+            if (comboBoxCreator.Text == "Заполните поле")
+            {
+                comboBoxCreator.Text = "";
+                comboBoxCreator.ForeColor = SystemColors.WindowText;
+            }
+
+            if (infoOfEventCreator.Text == "Заполните поле")
+            {
+                infoOfEventCreator.Text = "";
+                infoOfEventCreator.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void infoOfEventCreator_TextChanged(object sender, EventArgs e)
+        {
+            infoOfEventCreator.ForeColor = SystemColors.WindowText;
+            infoOfEventCreator.BackColor = SystemColors.Window;
+        }
+
+        private void nameOfEventCreator_TextChanged(object sender, EventArgs e)
+        {
+            nameOfEventCreator.ForeColor = SystemColors.WindowText;
+            nameOfEventCreator.BackColor = SystemColors.Window;
+        }
+
+        private void nameOfEventCreator_Enter(object sender, EventArgs e)
+        {
+            if (nameOfEventCreator.Text == "Заполните поле")
+            {
+                nameOfEventCreator.Text = "";
+                nameOfEventCreator.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void comboBoxCreator_Enter(object sender, EventArgs e)
+        {
+            if (comboBoxCreator.Text == "Заполните поле")
+            {
+                comboBoxCreator.Text = "";
+                comboBoxCreator.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void infoOfEventCreator_Enter(object sender, EventArgs e)
+        {
+            if (infoOfEventCreator.Text == "Заполните поле")
+            {
+                infoOfEventCreator.Text = "";
+                infoOfEventCreator.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void comboBoxCreator_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

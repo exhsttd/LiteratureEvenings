@@ -13,9 +13,13 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                _dbContext?.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -39,11 +43,12 @@
             this.infoOfEventChange = new System.Windows.Forms.TextBox();
             this.loadBtnEditor = new System.Windows.Forms.Button();
             this.unloadBtnEditor = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxEventEditor1
             // 
-            this.textBoxEventEditor1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.textBoxEventEditor1.BackColor = System.Drawing.Color.Silver;
             this.textBoxEventEditor1.Enabled = false;
             this.textBoxEventEditor1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBoxEventEditor1.Location = new System.Drawing.Point(64, 90);
@@ -56,7 +61,7 @@
             // 
             // textBoxEventEditor2
             // 
-            this.textBoxEventEditor2.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.textBoxEventEditor2.BackColor = System.Drawing.Color.Silver;
             this.textBoxEventEditor2.Enabled = false;
             this.textBoxEventEditor2.ForeColor = System.Drawing.SystemColors.MenuText;
             this.textBoxEventEditor2.Location = new System.Drawing.Point(64, 188);
@@ -68,7 +73,7 @@
             // 
             // textBoxEventEditor3
             // 
-            this.textBoxEventEditor3.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.textBoxEventEditor3.BackColor = System.Drawing.Color.Silver;
             this.textBoxEventEditor3.Enabled = false;
             this.textBoxEventEditor3.Location = new System.Drawing.Point(64, 239);
             this.textBoxEventEditor3.Name = "textBoxEventEditor3";
@@ -79,7 +84,7 @@
             // 
             // textBoxEventEditor4
             // 
-            this.textBoxEventEditor4.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.textBoxEventEditor4.BackColor = System.Drawing.Color.Silver;
             this.textBoxEventEditor4.Enabled = false;
             this.textBoxEventEditor4.Location = new System.Drawing.Point(64, 291);
             this.textBoxEventEditor4.Name = "textBoxEventEditor4";
@@ -90,7 +95,7 @@
             // 
             // textBoxEventEditor5
             // 
-            this.textBoxEventEditor5.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.textBoxEventEditor5.BackColor = System.Drawing.Color.Silver;
             this.textBoxEventEditor5.Enabled = false;
             this.textBoxEventEditor5.Location = new System.Drawing.Point(64, 338);
             this.textBoxEventEditor5.Name = "textBoxEventEditor5";
@@ -118,6 +123,7 @@
             // 
             // cmbCategory
             // 
+            this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategory.FormattingEnabled = true;
             this.cmbCategory.Items.AddRange(new object[] {
             "Тема 1",
@@ -157,11 +163,23 @@
             this.unloadBtnEditor.UseVisualStyleBackColor = true;
             this.unloadBtnEditor.Click += new System.EventHandler(this.unloadBtnEditor_Click);
             // 
+            // btnDelete
+            // 
+            this.btnDelete.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnDelete.Location = new System.Drawing.Point(64, 570);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(182, 29);
+            this.btnDelete.TabIndex = 12;
+            this.btnDelete.Text = "удалить событие";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
             // EventEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(799, 661);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.unloadBtnEditor);
             this.Controls.Add(this.loadBtnEditor);
             this.Controls.Add(this.infoOfEventChange);
@@ -193,5 +211,6 @@
         private System.Windows.Forms.TextBox infoOfEventChange;
         private System.Windows.Forms.Button loadBtnEditor;
         private System.Windows.Forms.Button unloadBtnEditor;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

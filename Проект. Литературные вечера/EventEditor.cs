@@ -1,68 +1,190 @@
 ﻿using System;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
-using Npgsql;
 using Проект.Литературные_вечера.Data;
-using static System.Data.Entity.Infrastructure.Design.Executor;
+using System.Data.Entity;
 
 namespace Проект.Литературные_вечера
 {
     public partial class EventEditor : Form
     {
-        private int _eventId;
-        public EventEditor(int eventId)
+        private readonly int _eventId;
+        private readonly AppDbContext _dbContext;
+        private readonly Event _currentEvent;
+
+        public EventEditor(int eventId, AppDbContext dbContext)
         {
             InitializeComponent();
             _eventId = eventId;
+            _dbContext = dbContext;
+            _currentEvent = _dbContext.Events.Find(eventId);
+
+            InitializeForm();
             LoadEventData();
-            dateTimePickerEditor.MinDate = DateTime.Today;
         }
-        private void LoadEventData()
+
+        private void InitializeForm()
         {
-            // Реализация загрузки данных для редактирования
-            string connectionString = "Host=localhost;Port=5433;Database=EventManagement;Username=postgres;Password=bednistudentkpfu11;";
+            dateTimePickerEditor.MinDate = DateTime.Today;
+            nameOfEventChange.Text = _currentEvent?.Title ?? "";
+            cmbCategory.Text = _currentEvent?.Category ?? "";
+            infoOfEventChange.Text = _currentEvent?.Description ?? "";
 
-            using (var conn = new NpgsqlConnection(connectionString))
+            if (_currentEvent != null)
             {
-                conn.Open();
-                string sql = "SELECT title, category, date, description FROM events WHERE event_id = @id";
-
-                using (var cmd = new NpgsqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@id", _eventId);
-
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            nameOfEventChange.Text = reader["title"].ToString();
-                            cmbCategory.Text = reader["category"].ToString();
-                            dateTimePickerEditor.Value = (DateTime)reader["date"];
-                            infoOfEventChange.Text = reader["description"].ToString();
-                        }
-                    }
-                }
+                dateTimePickerEditor.Value = _currentEvent.Date + _currentEvent.Time;
             }
         }
 
-        private void nameOfEventChange_Click(object sender, EventArgs e)
+        private void LoadEventData()
         {
-            string userText = nameOfEventChange.Text;
-        }
+            try
+            {
+                if (_currentEvent == null)
+                {
+                    MessageBox.Show("Событие не найдено", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+                var categories = _dbContext.Events
+                    .Select(e => e.Category)
+                    .Distinct()
+                    .OrderBy(c => c)
+                    .ToArray();
 
-        private void dateTimePickerEditor_ValueChanged(object sender, EventArgs e)
-        {
-       
+                cmbCategory.Items.AddRange(categories);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void loadBtnEditor_Click(object sender, EventArgs e)
         {
+            if (!ValidateFields())
+                return;
 
+            try
+            {
+                _currentEvent.Title = nameOfEventChange.Text;
+                _currentEvent.Category = cmbCategory.Text;
+                _currentEvent.Date = dateTimePickerEditor.Value.Date;
+                _currentEvent.Time = dateTimePickerEditor.Value.TimeOfDay;
+                _currentEvent.Description = infoOfEventChange.Text;
+
+                if (_dbContext.Entry(_currentEvent).State == EntityState.Modified)
+                {
+                    _dbContext.SaveChanges();
+                    MessageBox.Show("Изменения сохранены успешно!", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    this.DialogResult = DialogResult.Cancel;
+                }
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка сохранения: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Вы уверены, что хотите удалить это событие?",
+                "Подтверждение удаления",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    _dbContext.Events.Remove(_currentEvent);
+                    _dbContext.SaveChanges();
+
+                    MessageBox.Show("Событие успешно удалено", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.DialogResult = DialogResult.Abort;
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void unloadBtnEditor_Click(object sender, EventArgs e)
         {
+            var result = MessageBox.Show("Вы хотите отменить изменения?", "Подтверждение",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
+            if (result == DialogResult.Yes)
+            {
+                var entry = _dbContext.Entry(_currentEvent);
+                if (entry.State == EntityState.Modified)
+                {
+                    entry.CurrentValues.SetValues(entry.OriginalValues);
+                    entry.State = EntityState.Unchanged;
+                }
+
+                this.DialogResult = DialogResult.Cancel;
+                this.Close();
+            }
         }
 
+        private bool ValidateFields()
+        {
+            bool isValid = true;
+            ResetFieldStyles();
+
+            if (string.IsNullOrWhiteSpace(nameOfEventChange.Text))
+            {
+                nameOfEventChange.BackColor = Color.LightPink;
+                isValid = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(cmbCategory.Text))
+            {
+                cmbCategory.BackColor = Color.LightPink;
+                MessageBox.Show("Пожалуйста, выберите категорию!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                isValid = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(infoOfEventChange.Text))
+            {
+                infoOfEventChange.BackColor = Color.LightPink;
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        private void ResetFieldStyles()
+        {
+            nameOfEventChange.BackColor = SystemColors.Window;
+            cmbCategory.BackColor = SystemColors.Window;
+            infoOfEventChange.BackColor = SystemColors.Window;
+        }
+
+        private void nameOfEventChange_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void dateTimePickerEditor_ValueChanged(object sender, EventArgs e)
+        {
+        }
     }
 }
