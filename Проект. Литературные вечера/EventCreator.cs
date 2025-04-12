@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -66,11 +65,6 @@ namespace Проект.Литературные_вечера
 
                 _dbContext.Events.Add(newEvent);
                 _dbContext.SaveChanges();
-
-                MessageBox.Show("Событие успешно создано!", "Успех",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
@@ -82,53 +76,33 @@ namespace Проект.Литературные_вечера
 
         private bool ValidateFields()
         {
-            ResetFieldHints();
+            ResetFieldStyles();
             bool isValid = true;
 
-            if (string.IsNullOrWhiteSpace(nameOfEventCreator.Text))
+            foreach (var control in new Control[] { nameOfEventCreator, infoOfEventCreator})
             {
-                nameOfEventCreator.Text = "Заполните поле";
-                nameOfEventCreator.ForeColor = Color.Red;
-                isValid = false;
+                if (string.IsNullOrWhiteSpace(control.Text))
+                {
+                    control.BackColor = Color.LightPink;
+                    isValid = false;
+                }
             }
 
-            if (comboBoxCreator.SelectedIndex == -1)
+            if (string.IsNullOrWhiteSpace(comboBoxCreator.Text))
             {
-                MessageBox.Show("Выберите категорию!", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                comboBoxCreator.Focus();
-                isValid = false;
-            }
-
-            if (string.IsNullOrWhiteSpace(infoOfEventCreator.Text))
-            {
-                infoOfEventCreator.Text = "Заполните поле";
-                infoOfEventCreator.ForeColor = Color.Red;
+                comboBoxCreator.BackColor = Color.LightPink;
+                MessageBox.Show("Пожалуйста, выберите категорию!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 isValid = false;
             }
 
             return isValid;
         }
 
-        private void ResetFieldHints()
+        private void ResetFieldStyles()
         {
-            if (nameOfEventCreator.Text == "Заполните поле")
-            {
-                nameOfEventCreator.Text = "";
-                nameOfEventCreator.ForeColor = SystemColors.WindowText;
-            }
-
-            if (comboBoxCreator.Text == "Заполните поле")
-            {
-                comboBoxCreator.Text = "";
-                comboBoxCreator.ForeColor = SystemColors.WindowText;
-            }
-
-            if (infoOfEventCreator.Text == "Заполните поле")
-            {
-                infoOfEventCreator.Text = "";
-                infoOfEventCreator.ForeColor = SystemColors.WindowText;
-            }
+            nameOfEventCreator.BackColor = SystemColors.Window;
+            infoOfEventCreator.BackColor = SystemColors.Window;
+            comboBoxCreator.BackColor = SystemColors.Window;
         }
 
         private void infoOfEventCreator_TextChanged(object sender, EventArgs e)
@@ -173,6 +147,11 @@ namespace Проект.Литературные_вечера
         private void comboBoxCreator_SelectedIndexChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void lblDescriptionCreator_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

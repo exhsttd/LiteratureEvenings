@@ -4,8 +4,6 @@ using System.Linq;
 using System.Windows.Forms;
 using Npgsql;
 using Проект.Литературные_вечера.Data;
-using System.Data.Entity;
-using System.Diagnostics;
 
 namespace Проект.Литературные_вечера
 {
@@ -31,12 +29,6 @@ namespace Проект.Литературные_вечера
             listViewEvents.Columns.Add("Категория", 100);
             listViewEvents.Columns.Add("Описание", 250);
 
-            listViewFilterResults.View = View.Details;
-            listViewFilterResults.FullRowSelect = true;
-            listViewFilterResults.GridLines = true;
-            listViewFilterResults.Columns.Add("Название", 150);
-            listViewFilterResults.Columns.Add("Дата", 100);
-            listViewFilterResults.Columns.Add("Категория", 120);
             comboFilterParam.Visible = false;
         }
 
@@ -112,90 +104,77 @@ namespace Проект.Литературные_вечера
 
         private void ApplyFilters()
         {
-            try
+            listViewEvents.Items.Clear();
+
+            using (var conn = new NpgsqlConnection(connectionString))
             {
-                listViewFilterResults.BeginUpdate();
-                listViewFilterResults.Items.Clear();
+                conn.Open();
+                NpgsqlCommand cmd;
 
-                if (comboSortType.SelectedIndex == -1 || comboFilterParam.SelectedIndex == -1)
-                    return;
-
-                using (var conn = new NpgsqlConnection(connectionString))
+                switch (comboSortType.SelectedIndex)
                 {
-                    conn.Open();
-                    NpgsqlCommand cmd;
-
-                    switch (comboSortType.SelectedIndex)
-                    {
-                        case 0: 
-                            var thresholdDate = DateTime.Today.AddDays(7);
-                            if (comboFilterParam.SelectedIndex == 0) 
-                            {
-                                cmd = new NpgsqlCommand(
-                                    "SELECT * FROM events WHERE date >= @today AND date <= @threshold ORDER BY date",
-                                    conn);
-                            }
-                            else
-                            {
-                                cmd = new NpgsqlCommand(
-                                    "SELECT * FROM events WHERE date > @threshold ORDER BY date",
-                                    conn);
-                            }
-                            cmd.Parameters.AddWithValue("@today", DateTime.Today);
-                            cmd.Parameters.AddWithValue("@threshold", thresholdDate);
-                            break;
-
-                        case 1:
-                            if (comboFilterParam.SelectedIndex == 0) 
-                            {
-                                cmd = new NpgsqlCommand(
-                                    "SELECT * FROM events WHERE date >= @today ORDER BY category",
-                                    conn);
-                            }
-                            else 
-                            {
-                                cmd = new NpgsqlCommand(
-                                    "SELECT * FROM events WHERE date >= @today AND category = @category ORDER BY date",
-                                    conn);
-                                cmd.Parameters.AddWithValue("@category", comboFilterParam.SelectedItem.ToString());
-                            }
-                            cmd.Parameters.AddWithValue("@today", DateTime.Today);
-                            break;
-
-                        default:
-                            return;
-                    }
-
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
+                    case 0: // Фильтр по дате
+                        if (comboFilterParam.SelectedIndex == 0) // "Ближайшие 7 дней"
                         {
-                            var item = new ListViewItem(reader["title"].ToString());
-                            item.SubItems.Add(((DateTime)reader["date"]).ToString("dd.MM.yyyy"));
-                            item.SubItems.Add(reader["category"].ToString());
-                            item.SubItems.Add(reader["description"].ToString());
-                            item.Tag = Convert.ToInt32(reader["event_id"]);
-
-                            listViewFilterResults.Items.Add(item);
+                            cmd = new NpgsqlCommand(
+                                "SELECT event_id, title, date, category, description FROM events " +
+                                "WHERE date BETWEEN @today AND @nextWeek " +
+                                "ORDER BY date", conn);
+                            cmd.Parameters.AddWithValue("@today", DateTime.Today);
+                            cmd.Parameters.AddWithValue("@nextWeek", DateTime.Today.AddDays(7));
                         }
+                        else // "Остальные события"
+                        {
+                            cmd = new NpgsqlCommand(
+                                "SELECT event_id, title, date, category, description FROM events " +
+                                "WHERE date > @nextWeek " +
+                                "ORDER BY date", conn);
+                            cmd.Parameters.AddWithValue("@nextWeek", DateTime.Today.AddDays(7));
+                        }
+                        break;
+
+                    case 1: // Фильтр по категории
+                        if (comboFilterParam.SelectedIndex == 0) // "Выберите категорию"
+                        {
+                            LoadAllEvents();
+                            return;
+                        }
+                        else
+                        {
+                            string selectedCategory = comboFilterParam.SelectedItem.ToString();
+                            cmd = new NpgsqlCommand(
+                                "SELECT event_id, title, date, category, description FROM events " +
+                                "WHERE category = @category AND date >= @today " +
+                                "ORDER BY date", conn);
+                            cmd.Parameters.AddWithValue("@category", selectedCategory);
+                            cmd.Parameters.AddWithValue("@today", DateTime.Today);
+                        }
+                        break;
+
+                    default:
+                        LoadAllEvents();
+                        return;
+                }
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var item = new ListViewItem(reader["title"].ToString());
+                        item.SubItems.Add(((DateTime)reader["date"]).ToString("dd.MM.yyyy"));
+                        item.SubItems.Add(reader["category"].ToString());
+                        item.SubItems.Add(reader["description"].ToString());
+                        item.Tag = Convert.ToInt32(reader["event_id"]);
+
+                        if (((DateTime)reader["date"]) <= DateTime.Today.AddDays(7))
+                        {
+                            item.BackColor = Color.LightYellow;
+                            item.ToolTipText = "Ближайшее событие";
+                        }
+
+                        listViewEvents.Items.Add(item);
                     }
                 }
-
-                if (listViewFilterResults.Items.Count == 0)
-                {
-                    var item = new ListViewItem("Нет событий по выбранным критериям");
-                    item.ForeColor = Color.Gray;
-                    listViewFilterResults.Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка при фильтрации: {ex.Message}");
-            }
-            finally
-            {
-                listViewFilterResults.EndUpdate();
-                listViewFilterResults.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             }
         }
 
@@ -245,12 +224,14 @@ namespace Проект.Литературные_вечера
             comboSortType.SelectedIndex = -1;
             comboFilterParam.SelectedIndex = -1;
 
-            listViewFilterResults.Items.Clear();
-
             comboFilterParam.Visible = false;
             var item = new ListViewItem();
-            listViewFilterResults.Items.Add(item);
             LoadAllEvents();
+        }
+
+        private void listViewEvents_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Проект.Литературные_вечера
             _eventId = eventId;
             _dbContext = dbContext;
             _currentEvent = _dbContext.Events.Find(eventId);
-
             InitializeForm();
             LoadEventData();
         }
@@ -79,9 +78,6 @@ namespace Проект.Литературные_вечера
                 if (_dbContext.Entry(_currentEvent).State == EntityState.Modified)
                 {
                     _dbContext.SaveChanges();
-                    MessageBox.Show("Изменения сохранены успешно!", "Успех",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.DialogResult = DialogResult.OK;
                 }
                 else
                 {
@@ -110,11 +106,6 @@ namespace Проект.Литературные_вечера
                 {
                     _dbContext.Events.Remove(_currentEvent);
                     _dbContext.SaveChanges();
-
-                    MessageBox.Show("Событие успешно удалено", "Успех",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    this.DialogResult = DialogResult.Abort;
                     this.Close();
                 }
                 catch (Exception ex)
@@ -146,26 +137,22 @@ namespace Проект.Литературные_вечера
 
         private bool ValidateFields()
         {
-            bool isValid = true;
             ResetFieldStyles();
+            bool isValid = true;
 
-            if (string.IsNullOrWhiteSpace(nameOfEventChange.Text))
+            foreach (var control in new Control[] { nameOfEventChange, infoOfEventChange })
             {
-                nameOfEventChange.BackColor = Color.LightPink;
-                isValid = false;
+                if (string.IsNullOrWhiteSpace(control.Text))
+                {
+                    control.BackColor = Color.LightPink;
+                    isValid = false;
+                }
             }
 
             if (string.IsNullOrWhiteSpace(cmbCategory.Text))
             {
                 cmbCategory.BackColor = Color.LightPink;
-                MessageBox.Show("Пожалуйста, выберите категорию!", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                isValid = false;
-            }
-
-            if (string.IsNullOrWhiteSpace(infoOfEventChange.Text))
-            {
-                infoOfEventChange.BackColor = Color.LightPink;
+                MessageBox.Show("Пожалуйста, выберите категорию!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 isValid = false;
             }
 

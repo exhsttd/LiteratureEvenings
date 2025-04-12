@@ -39,7 +39,7 @@ namespace Проект.Литературные_вечера
                                 lblTitle.Text = reader["title"].ToString();
                                 lblCategory.Text = reader["category"].ToString();
                                 lblDate.Text = ((DateTime)reader["date"]).ToString("dd.MM.yyyy");
-                                txtDescription.Text = reader["description"].ToString();
+                                lblDescription.Text = reader["description"].ToString();
                             }
                         }
                     }
@@ -47,7 +47,7 @@ namespace Проект.Литературные_вечера
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при загрузке данных: {ex.Message}", "Ошибка",
+                MessageBox.Show($"Данные.Message", "Ошибка",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -93,10 +93,6 @@ namespace Проект.Литературные_вечера
 
                             if (rowsAffected > 0)
                             {
-                                MessageBox.Show("Событие успешно удалено", "Успех",
-                                              MessageBoxButtons.OK,
-                                              MessageBoxIcon.Information);
-                                this.DialogResult = DialogResult.Abort;
                                 this.Close();
                             }
                         }

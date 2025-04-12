@@ -31,20 +31,20 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.lblCategory = new System.Windows.Forms.Label();
             this.lblDate = new System.Windows.Forms.Label();
-            this.txtDescription = new System.Windows.Forms.TextBox();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnDeleteEvent = new System.Windows.Forms.Button();
+            this.lblDescription = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblTitle
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.BackColor = System.Drawing.Color.Silver;
-            this.lblTitle.Location = new System.Drawing.Point(196, 55);
+            this.lblTitle.Location = new System.Drawing.Point(189, 107);
             this.lblTitle.MaximumSize = new System.Drawing.Size(1000, 1000);
-            this.lblTitle.MinimumSize = new System.Drawing.Size(400, 40);
+            this.lblTitle.MinimumSize = new System.Drawing.Size(400, 30);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(400, 40);
+            this.lblTitle.Size = new System.Drawing.Size(400, 30);
             this.lblTitle.TabIndex = 0;
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -52,7 +52,7 @@
             // 
             this.lblCategory.AutoSize = true;
             this.lblCategory.BackColor = System.Drawing.Color.Silver;
-            this.lblCategory.Location = new System.Drawing.Point(379, 127);
+            this.lblCategory.Location = new System.Drawing.Point(559, 176);
             this.lblCategory.MinimumSize = new System.Drawing.Size(150, 30);
             this.lblCategory.Name = "lblCategory";
             this.lblCategory.Size = new System.Drawing.Size(150, 30);
@@ -63,30 +63,16 @@
             // 
             this.lblDate.AutoSize = true;
             this.lblDate.BackColor = System.Drawing.Color.Silver;
-            this.lblDate.Location = new System.Drawing.Point(558, 127);
+            this.lblDate.Location = new System.Drawing.Point(559, 223);
             this.lblDate.MinimumSize = new System.Drawing.Size(200, 30);
             this.lblDate.Name = "lblDate";
             this.lblDate.Size = new System.Drawing.Size(200, 30);
             this.lblDate.TabIndex = 2;
             this.lblDate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // txtDescription
-            // 
-            this.txtDescription.BackColor = System.Drawing.Color.Silver;
-            this.txtDescription.Cursor = System.Windows.Forms.Cursors.Default;
-            this.txtDescription.Enabled = false;
-            this.txtDescription.ForeColor = System.Drawing.SystemColors.Window;
-            this.txtDescription.Location = new System.Drawing.Point(106, 185);
-            this.txtDescription.Multiline = true;
-            this.txtDescription.Name = "txtDescription";
-            this.txtDescription.ReadOnly = true;
-            this.txtDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDescription.Size = new System.Drawing.Size(610, 360);
-            this.txtDescription.TabIndex = 3;
-            // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(549, 574);
+            this.btnEdit.Location = new System.Drawing.Point(312, 514);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(223, 28);
             this.btnEdit.TabIndex = 4;
@@ -97,7 +83,7 @@
             // btnDeleteEvent
             // 
             this.btnDeleteEvent.BackColor = System.Drawing.Color.RosyBrown;
-            this.btnDeleteEvent.Location = new System.Drawing.Point(106, 574);
+            this.btnDeleteEvent.Location = new System.Drawing.Point(47, 516);
             this.btnDeleteEvent.Name = "btnDeleteEvent";
             this.btnDeleteEvent.Size = new System.Drawing.Size(129, 26);
             this.btnDeleteEvent.TabIndex = 5;
@@ -105,16 +91,28 @@
             this.btnDeleteEvent.UseVisualStyleBackColor = false;
             this.btnDeleteEvent.Click += new System.EventHandler(this.btnDeleteEvent_Click);
             // 
+            // lblDescription
+            // 
+            this.lblDescription.AutoSize = true;
+            this.lblDescription.BackColor = System.Drawing.Color.Silver;
+            this.lblDescription.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblDescription.Location = new System.Drawing.Point(44, 176);
+            this.lblDescription.MinimumSize = new System.Drawing.Size(500, 300);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(500, 300);
+            this.lblDescription.TabIndex = 6;
+            // 
             // EventInfo
             // 
-            this.ClientSize = new System.Drawing.Size(831, 654);
+            this.ClientSize = new System.Drawing.Size(799, 661);
+            this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.btnDeleteEvent);
             this.Controls.Add(this.btnEdit);
-            this.Controls.Add(this.txtDescription);
             this.Controls.Add(this.lblDate);
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.lblTitle);
             this.Name = "EventInfo";
+            this.Text = "Информация о событии";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -125,8 +123,8 @@
         private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Label lblCategory;
         private System.Windows.Forms.Label lblDate;
-        private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnDeleteEvent;
+        private System.Windows.Forms.Label lblDescription;
     }
 }
