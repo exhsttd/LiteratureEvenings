@@ -20,8 +20,7 @@ namespace Проект.Литературные_вечера
 
         private void LoadEventData()
         {
-            try
-            {
+
                 using (var conn = new NpgsqlConnection(_connectionString))
                 {
                     conn.Open();
@@ -44,12 +43,6 @@ namespace Проект.Литературные_вечера
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Данные.Message", "Ошибка",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
 

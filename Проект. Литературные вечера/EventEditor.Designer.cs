@@ -32,6 +32,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EventEditor));
             this.nameOfEventChange = new System.Windows.Forms.TextBox();
             this.dateTimePickerEditor = new System.Windows.Forms.DateTimePicker();
             this.cmbCategory = new System.Windows.Forms.ComboBox();
@@ -47,6 +48,7 @@
             // 
             // nameOfEventChange
             // 
+            this.nameOfEventChange.BackColor = System.Drawing.Color.AntiqueWhite;
             this.nameOfEventChange.Location = new System.Drawing.Point(64, 153);
             this.nameOfEventChange.Multiline = true;
             this.nameOfEventChange.Name = "nameOfEventChange";
@@ -56,6 +58,7 @@
             // 
             // dateTimePickerEditor
             // 
+            this.dateTimePickerEditor.CalendarMonthBackground = System.Drawing.Color.AntiqueWhite;
             this.dateTimePickerEditor.Location = new System.Drawing.Point(64, 351);
             this.dateTimePickerEditor.Name = "dateTimePickerEditor";
             this.dateTimePickerEditor.Size = new System.Drawing.Size(177, 25);
@@ -78,6 +81,7 @@
             // 
             // infoOfEventChange
             // 
+            this.infoOfEventChange.BackColor = System.Drawing.Color.AntiqueWhite;
             this.infoOfEventChange.Location = new System.Drawing.Point(393, 153);
             this.infoOfEventChange.Multiline = true;
             this.infoOfEventChange.Name = "infoOfEventChange";
@@ -87,7 +91,7 @@
             // 
             // loadBtnEditor
             // 
-            this.loadBtnEditor.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.loadBtnEditor.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.loadBtnEditor.Location = new System.Drawing.Point(583, 548);
             this.loadBtnEditor.Name = "loadBtnEditor";
             this.loadBtnEditor.Size = new System.Drawing.Size(182, 33);
@@ -98,17 +102,18 @@
             // 
             // unloadBtnEditor
             // 
+            this.unloadBtnEditor.BackColor = System.Drawing.Color.Peru;
             this.unloadBtnEditor.Location = new System.Drawing.Point(349, 548);
             this.unloadBtnEditor.Name = "unloadBtnEditor";
             this.unloadBtnEditor.Size = new System.Drawing.Size(182, 33);
             this.unloadBtnEditor.TabIndex = 11;
             this.unloadBtnEditor.Text = "Отменить изменения";
-            this.unloadBtnEditor.UseVisualStyleBackColor = true;
+            this.unloadBtnEditor.UseVisualStyleBackColor = false;
             this.unloadBtnEditor.Click += new System.EventHandler(this.unloadBtnEditor_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.BackColor = System.Drawing.Color.RosyBrown;
+            this.btnDelete.BackColor = System.Drawing.Color.Salmon;
             this.btnDelete.Location = new System.Drawing.Point(64, 548);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(182, 33);
@@ -155,9 +160,14 @@
             // 
             // EventEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 744);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.Color.NavajoWhite;
+            this.BackgroundImage = global::Проект.Литературные_вечера.Properties.Resources.library_small1;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(799, 661);
             this.Controls.Add(this.lblDescriptionEditor);
             this.Controls.Add(this.lblDateEditor);
             this.Controls.Add(this.lblCategoryEditor);
@@ -170,6 +180,7 @@
             this.Controls.Add(this.dateTimePickerEditor);
             this.Controls.Add(this.nameOfEventChange);
             this.Font = new System.Drawing.Font("Palatino Linotype", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EventEditor";
             this.Text = "Редактирование события";
             this.ResumeLayout(false);

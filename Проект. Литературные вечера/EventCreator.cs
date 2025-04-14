@@ -20,8 +20,7 @@ namespace Проект.Литературные_вечера
 
         private void LoadCategories()
         {
-            try
-            {
+
                 var categories = _dbContext.Events
                     .Select(e => e.Category)
                     .Distinct()
@@ -29,12 +28,6 @@ namespace Проект.Литературные_вечера
                     .ToArray();
 
                 comboBoxCreator.Items.AddRange(categories);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка загрузки категорий: {ex.Message}", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void unloadBtnCreator_Click(object sender, EventArgs e)

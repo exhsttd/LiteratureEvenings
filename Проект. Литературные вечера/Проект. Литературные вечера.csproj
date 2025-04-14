@@ -216,6 +216,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\фон11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\library-small.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\library-small1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.manifest" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

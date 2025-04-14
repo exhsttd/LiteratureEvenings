@@ -38,8 +38,7 @@ namespace Проект.Литературные_вечера
 
         private void LoadEventData()
         {
-            try
-            {
+
                 if (_currentEvent == null)
                 {
                     MessageBox.Show("Событие не найдено", "Ошибка",
@@ -54,20 +53,11 @@ namespace Проект.Литературные_вечера
                     .ToArray();
 
                 cmbCategory.Items.AddRange(categories);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка загрузки данных: {ex.Message}", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void loadBtnEditor_Click(object sender, EventArgs e)
         {
             if (!ValidateFields()) return;
-
-            try
-            {
                 (_currentEvent.Title, _currentEvent.Category, _currentEvent.Description) =
                     (nameOfEventChange.Text, cmbCategory.Text, infoOfEventChange.Text);
 
@@ -79,12 +69,6 @@ namespace Проект.Литературные_вечера
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка сохранения: {ex.Message}", "Ошибка",
-                              MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

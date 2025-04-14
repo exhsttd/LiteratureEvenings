@@ -20,7 +20,6 @@ namespace Проект.Литературные_вечера
             InitializeComponents();
             LoadAllEvents();
         }
-
         private void InitializeComponents()
         {
 
@@ -124,8 +123,8 @@ namespace Проект.Литературные_вечера
 
                 switch (comboSortType.SelectedIndex)
                 {
-                    case 0: // Фильтр по дате
-                        if (comboFilterParam.SelectedIndex == 0) // "Ближайшие 7 дней"
+                    case 0: 
+                        if (comboFilterParam.SelectedIndex == 0) 
                         {
                             cmd = new NpgsqlCommand(
                                 "SELECT event_id, title, date, category, description FROM events " +
@@ -134,7 +133,7 @@ namespace Проект.Литературные_вечера
                             cmd.Parameters.AddWithValue("@today", DateTime.Today);
                             cmd.Parameters.AddWithValue("@nextWeek", DateTime.Today.AddDays(7));
                         }
-                        else // "Остальные события"
+                        else
                         {
                             cmd = new NpgsqlCommand(
                                 "SELECT event_id, title, date, category, description FROM events " +
@@ -144,8 +143,8 @@ namespace Проект.Литературные_вечера
                         }
                         break;
 
-                    case 1: // Фильтр по категории
-                        if (comboFilterParam.SelectedIndex == 0) // "Выберите категорию"
+                    case 1: 
+                        if (comboFilterParam.SelectedIndex == 0) 
                         {
                             LoadAllEvents();
                             return;
@@ -256,8 +255,7 @@ namespace Проект.Литературные_вечера
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            try
-            {
+
                 using (var excelPackage = new ExcelPackage())
                 {
                     var column = excelPackage.Workbook.Worksheets.Add("События");
@@ -288,11 +286,5 @@ namespace Проект.Литературные_вечера
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка",
-                              MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
     }
-}

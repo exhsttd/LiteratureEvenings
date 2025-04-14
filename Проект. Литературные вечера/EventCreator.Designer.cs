@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EventCreator));
             this.unloadBtnCreator = new System.Windows.Forms.Button();
             this.loadBtnCreator = new System.Windows.Forms.Button();
             this.infoOfEventCreator = new System.Windows.Forms.TextBox();
@@ -42,18 +43,19 @@
             // 
             // unloadBtnCreator
             // 
-            this.unloadBtnCreator.Location = new System.Drawing.Point(59, 605);
+            this.unloadBtnCreator.BackColor = System.Drawing.Color.Peru;
+            this.unloadBtnCreator.Location = new System.Drawing.Point(64, 521);
             this.unloadBtnCreator.Name = "unloadBtnCreator";
             this.unloadBtnCreator.Size = new System.Drawing.Size(182, 33);
             this.unloadBtnCreator.TabIndex = 23;
             this.unloadBtnCreator.Text = "Отменить изменения";
-            this.unloadBtnCreator.UseVisualStyleBackColor = true;
+            this.unloadBtnCreator.UseVisualStyleBackColor = false;
             this.unloadBtnCreator.Click += new System.EventHandler(this.unloadBtnCreator_Click);
             // 
             // loadBtnCreator
             // 
-            this.loadBtnCreator.BackColor = System.Drawing.Color.DarkSeaGreen;
-            this.loadBtnCreator.Location = new System.Drawing.Point(558, 605);
+            this.loadBtnCreator.BackColor = System.Drawing.Color.MediumSeaGreen;
+            this.loadBtnCreator.Location = new System.Drawing.Point(555, 521);
             this.loadBtnCreator.Name = "loadBtnCreator";
             this.loadBtnCreator.Size = new System.Drawing.Size(182, 33);
             this.loadBtnCreator.TabIndex = 21;
@@ -63,6 +65,7 @@
             // 
             // infoOfEventCreator
             // 
+            this.infoOfEventCreator.BackColor = System.Drawing.Color.AntiqueWhite;
             this.infoOfEventCreator.Location = new System.Drawing.Point(393, 174);
             this.infoOfEventCreator.Multiline = true;
             this.infoOfEventCreator.Name = "infoOfEventCreator";
@@ -72,6 +75,7 @@
             // 
             // comboBoxCreator
             // 
+            this.comboBoxCreator.BackColor = System.Drawing.Color.AntiqueWhite;
             this.comboBoxCreator.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCreator.FormattingEnabled = true;
             this.comboBoxCreator.Items.AddRange(new object[] {
@@ -86,6 +90,7 @@
             // 
             // dateTimePickerCreator
             // 
+            this.dateTimePickerCreator.CalendarMonthBackground = System.Drawing.Color.AntiqueWhite;
             this.dateTimePickerCreator.Location = new System.Drawing.Point(64, 362);
             this.dateTimePickerCreator.Name = "dateTimePickerCreator";
             this.dateTimePickerCreator.Size = new System.Drawing.Size(177, 25);
@@ -93,6 +98,7 @@
             // 
             // nameOfEventCreator
             // 
+            this.nameOfEventCreator.BackColor = System.Drawing.Color.AntiqueWhite;
             this.nameOfEventCreator.Location = new System.Drawing.Point(64, 174);
             this.nameOfEventCreator.Multiline = true;
             this.nameOfEventCreator.Name = "nameOfEventCreator";
@@ -138,9 +144,14 @@
             // 
             // EventCreator
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 744);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.Color.NavajoWhite;
+            this.BackgroundImage = global::Проект.Литературные_вечера.Properties.Resources.library_small1;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(799, 661);
             this.Controls.Add(this.lblDescriptionCreator);
             this.Controls.Add(this.lblDateCreator);
             this.Controls.Add(this.lblCategoryCreator);
@@ -152,6 +163,7 @@
             this.Controls.Add(this.dateTimePickerCreator);
             this.Controls.Add(this.nameOfEventCreator);
             this.Font = new System.Drawing.Font("Palatino Linotype", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EventCreator";
             this.Text = "Создание события";
             this.ResumeLayout(false);
