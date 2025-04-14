@@ -93,6 +93,7 @@ namespace Проект.Литературные_вечера
 
                             if (rowsAffected > 0)
                             {
+                                this.DialogResult = DialogResult.OK;
                                 this.Close();
                             }
                         }

@@ -47,18 +47,18 @@
             // 
             // nameOfEventChange
             // 
-            this.nameOfEventChange.Location = new System.Drawing.Point(64, 155);
+            this.nameOfEventChange.Location = new System.Drawing.Point(64, 153);
             this.nameOfEventChange.Multiline = true;
             this.nameOfEventChange.Name = "nameOfEventChange";
-            this.nameOfEventChange.Size = new System.Drawing.Size(284, 22);
+            this.nameOfEventChange.Size = new System.Drawing.Size(284, 24);
             this.nameOfEventChange.TabIndex = 5;
             this.nameOfEventChange.Click += new System.EventHandler(this.nameOfEventChange_Click);
             // 
             // dateTimePickerEditor
             // 
-            this.dateTimePickerEditor.Location = new System.Drawing.Point(64, 322);
+            this.dateTimePickerEditor.Location = new System.Drawing.Point(64, 351);
             this.dateTimePickerEditor.Name = "dateTimePickerEditor";
-            this.dateTimePickerEditor.Size = new System.Drawing.Size(177, 22);
+            this.dateTimePickerEditor.Size = new System.Drawing.Size(177, 25);
             this.dateTimePickerEditor.TabIndex = 6;
             this.dateTimePickerEditor.ValueChanged += new System.EventHandler(this.dateTimePickerEditor_ValueChanged);
             // 
@@ -71,26 +71,26 @@
             "Тема 1",
             "Тема 2",
             "Тема 3"});
-            this.cmbCategory.Location = new System.Drawing.Point(64, 245);
+            this.cmbCategory.Location = new System.Drawing.Point(64, 254);
             this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(177, 24);
+            this.cmbCategory.Size = new System.Drawing.Size(177, 26);
             this.cmbCategory.TabIndex = 7;
             // 
             // infoOfEventChange
             // 
-            this.infoOfEventChange.Location = new System.Drawing.Point(393, 155);
+            this.infoOfEventChange.Location = new System.Drawing.Point(393, 153);
             this.infoOfEventChange.Multiline = true;
             this.infoOfEventChange.Name = "infoOfEventChange";
             this.infoOfEventChange.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infoOfEventChange.Size = new System.Drawing.Size(372, 257);
+            this.infoOfEventChange.Size = new System.Drawing.Size(372, 289);
             this.infoOfEventChange.TabIndex = 8;
             // 
             // loadBtnEditor
             // 
             this.loadBtnEditor.BackColor = System.Drawing.Color.DarkSeaGreen;
-            this.loadBtnEditor.Location = new System.Drawing.Point(558, 538);
+            this.loadBtnEditor.Location = new System.Drawing.Point(583, 548);
             this.loadBtnEditor.Name = "loadBtnEditor";
-            this.loadBtnEditor.Size = new System.Drawing.Size(182, 29);
+            this.loadBtnEditor.Size = new System.Drawing.Size(182, 33);
             this.loadBtnEditor.TabIndex = 9;
             this.loadBtnEditor.Text = "Сохранить изменения";
             this.loadBtnEditor.UseVisualStyleBackColor = false;
@@ -98,9 +98,9 @@
             // 
             // unloadBtnEditor
             // 
-            this.unloadBtnEditor.Location = new System.Drawing.Point(345, 538);
+            this.unloadBtnEditor.Location = new System.Drawing.Point(349, 548);
             this.unloadBtnEditor.Name = "unloadBtnEditor";
-            this.unloadBtnEditor.Size = new System.Drawing.Size(182, 29);
+            this.unloadBtnEditor.Size = new System.Drawing.Size(182, 33);
             this.unloadBtnEditor.TabIndex = 11;
             this.unloadBtnEditor.Text = "Отменить изменения";
             this.unloadBtnEditor.UseVisualStyleBackColor = true;
@@ -109,9 +109,9 @@
             // btnDelete
             // 
             this.btnDelete.BackColor = System.Drawing.Color.RosyBrown;
-            this.btnDelete.Location = new System.Drawing.Point(59, 538);
+            this.btnDelete.Location = new System.Drawing.Point(64, 548);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(182, 29);
+            this.btnDelete.Size = new System.Drawing.Size(182, 33);
             this.btnDelete.TabIndex = 12;
             this.btnDelete.Text = "удалить событие";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -120,44 +120,44 @@
             // lblNameEditor
             // 
             this.lblNameEditor.AutoSize = true;
-            this.lblNameEditor.Location = new System.Drawing.Point(64, 136);
+            this.lblNameEditor.Location = new System.Drawing.Point(64, 132);
             this.lblNameEditor.Name = "lblNameEditor";
-            this.lblNameEditor.Size = new System.Drawing.Size(73, 16);
+            this.lblNameEditor.Size = new System.Drawing.Size(66, 18);
             this.lblNameEditor.TabIndex = 13;
             this.lblNameEditor.Text = "Название";
             // 
             // lblCategoryEditor
             // 
             this.lblCategoryEditor.AutoSize = true;
-            this.lblCategoryEditor.Location = new System.Drawing.Point(64, 226);
+            this.lblCategoryEditor.Location = new System.Drawing.Point(64, 233);
             this.lblCategoryEditor.Name = "lblCategoryEditor";
-            this.lblCategoryEditor.Size = new System.Drawing.Size(75, 16);
+            this.lblCategoryEditor.Size = new System.Drawing.Size(72, 18);
             this.lblCategoryEditor.TabIndex = 14;
             this.lblCategoryEditor.Text = "Категория";
             // 
             // lblDateEditor
             // 
             this.lblDateEditor.AutoSize = true;
-            this.lblDateEditor.Location = new System.Drawing.Point(64, 303);
+            this.lblDateEditor.Location = new System.Drawing.Point(64, 330);
             this.lblDateEditor.Name = "lblDateEditor";
-            this.lblDateEditor.Size = new System.Drawing.Size(39, 16);
+            this.lblDateEditor.Size = new System.Drawing.Size(38, 18);
             this.lblDateEditor.TabIndex = 15;
             this.lblDateEditor.Text = "Дата";
             // 
             // lblDescriptionEditor
             // 
             this.lblDescriptionEditor.AutoSize = true;
-            this.lblDescriptionEditor.Location = new System.Drawing.Point(390, 136);
+            this.lblDescriptionEditor.Location = new System.Drawing.Point(390, 132);
             this.lblDescriptionEditor.Name = "lblDescriptionEditor";
-            this.lblDescriptionEditor.Size = new System.Drawing.Size(72, 16);
+            this.lblDescriptionEditor.Size = new System.Drawing.Size(69, 18);
             this.lblDescriptionEditor.TabIndex = 16;
             this.lblDescriptionEditor.Text = "Описание";
             // 
             // EventEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 661);
+            this.ClientSize = new System.Drawing.Size(799, 744);
             this.Controls.Add(this.lblDescriptionEditor);
             this.Controls.Add(this.lblDateEditor);
             this.Controls.Add(this.lblCategoryEditor);
@@ -169,6 +169,7 @@
             this.Controls.Add(this.cmbCategory);
             this.Controls.Add(this.dateTimePickerEditor);
             this.Controls.Add(this.nameOfEventChange);
+            this.Font = new System.Drawing.Font("Palatino Linotype", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Name = "EventEditor";
             this.Text = "Редактирование события";
             this.ResumeLayout(false);

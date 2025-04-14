@@ -42,9 +42,9 @@
             // 
             // unloadBtnCreator
             // 
-            this.unloadBtnCreator.Location = new System.Drawing.Point(59, 538);
+            this.unloadBtnCreator.Location = new System.Drawing.Point(59, 605);
             this.unloadBtnCreator.Name = "unloadBtnCreator";
-            this.unloadBtnCreator.Size = new System.Drawing.Size(182, 29);
+            this.unloadBtnCreator.Size = new System.Drawing.Size(182, 33);
             this.unloadBtnCreator.TabIndex = 23;
             this.unloadBtnCreator.Text = "Отменить изменения";
             this.unloadBtnCreator.UseVisualStyleBackColor = true;
@@ -53,9 +53,9 @@
             // loadBtnCreator
             // 
             this.loadBtnCreator.BackColor = System.Drawing.Color.DarkSeaGreen;
-            this.loadBtnCreator.Location = new System.Drawing.Point(558, 538);
+            this.loadBtnCreator.Location = new System.Drawing.Point(558, 605);
             this.loadBtnCreator.Name = "loadBtnCreator";
-            this.loadBtnCreator.Size = new System.Drawing.Size(182, 29);
+            this.loadBtnCreator.Size = new System.Drawing.Size(182, 33);
             this.loadBtnCreator.TabIndex = 21;
             this.loadBtnCreator.Text = "Создать событие";
             this.loadBtnCreator.UseVisualStyleBackColor = false;
@@ -63,13 +63,12 @@
             // 
             // infoOfEventCreator
             // 
-            this.infoOfEventCreator.Location = new System.Drawing.Point(393, 155);
+            this.infoOfEventCreator.Location = new System.Drawing.Point(393, 174);
             this.infoOfEventCreator.Multiline = true;
             this.infoOfEventCreator.Name = "infoOfEventCreator";
             this.infoOfEventCreator.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.infoOfEventCreator.Size = new System.Drawing.Size(372, 257);
+            this.infoOfEventCreator.Size = new System.Drawing.Size(372, 289);
             this.infoOfEventCreator.TabIndex = 20;
-            this.infoOfEventCreator.TextChanged += new System.EventHandler(this.infoOfEventCreator_TextChanged);
             // 
             // comboBoxCreator
             // 
@@ -79,70 +78,69 @@
             "Тема 1",
             "Тема 2",
             "Тема 3"});
-            this.comboBoxCreator.Location = new System.Drawing.Point(64, 245);
+            this.comboBoxCreator.Location = new System.Drawing.Point(64, 276);
             this.comboBoxCreator.Name = "comboBoxCreator";
-            this.comboBoxCreator.Size = new System.Drawing.Size(177, 24);
+            this.comboBoxCreator.Size = new System.Drawing.Size(177, 26);
             this.comboBoxCreator.TabIndex = 19;
             this.comboBoxCreator.SelectedIndexChanged += new System.EventHandler(this.comboBoxCreator_SelectedIndexChanged);
             // 
             // dateTimePickerCreator
             // 
-            this.dateTimePickerCreator.Location = new System.Drawing.Point(64, 322);
+            this.dateTimePickerCreator.Location = new System.Drawing.Point(64, 362);
             this.dateTimePickerCreator.Name = "dateTimePickerCreator";
-            this.dateTimePickerCreator.Size = new System.Drawing.Size(177, 22);
+            this.dateTimePickerCreator.Size = new System.Drawing.Size(177, 25);
             this.dateTimePickerCreator.TabIndex = 18;
             // 
             // nameOfEventCreator
             // 
-            this.nameOfEventCreator.Location = new System.Drawing.Point(64, 155);
+            this.nameOfEventCreator.Location = new System.Drawing.Point(64, 174);
             this.nameOfEventCreator.Multiline = true;
             this.nameOfEventCreator.Name = "nameOfEventCreator";
-            this.nameOfEventCreator.Size = new System.Drawing.Size(284, 22);
+            this.nameOfEventCreator.Size = new System.Drawing.Size(284, 24);
             this.nameOfEventCreator.TabIndex = 17;
-            this.nameOfEventCreator.TextChanged += new System.EventHandler(this.nameOfEventCreator_TextChanged);
             // 
             // lblNameCreator
             // 
             this.lblNameCreator.AutoSize = true;
-            this.lblNameCreator.Location = new System.Drawing.Point(67, 133);
+            this.lblNameCreator.Location = new System.Drawing.Point(67, 150);
             this.lblNameCreator.Name = "lblNameCreator";
-            this.lblNameCreator.Size = new System.Drawing.Size(73, 16);
+            this.lblNameCreator.Size = new System.Drawing.Size(66, 18);
             this.lblNameCreator.TabIndex = 24;
             this.lblNameCreator.Text = "Название";
             // 
             // lblCategoryCreator
             // 
             this.lblCategoryCreator.AutoSize = true;
-            this.lblCategoryCreator.Location = new System.Drawing.Point(67, 226);
+            this.lblCategoryCreator.Location = new System.Drawing.Point(67, 254);
             this.lblCategoryCreator.Name = "lblCategoryCreator";
-            this.lblCategoryCreator.Size = new System.Drawing.Size(75, 16);
+            this.lblCategoryCreator.Size = new System.Drawing.Size(72, 18);
             this.lblCategoryCreator.TabIndex = 25;
             this.lblCategoryCreator.Text = "Категория";
             // 
             // lblDateCreator
             // 
             this.lblDateCreator.AutoSize = true;
-            this.lblDateCreator.Location = new System.Drawing.Point(67, 303);
+            this.lblDateCreator.Location = new System.Drawing.Point(67, 341);
             this.lblDateCreator.Name = "lblDateCreator";
-            this.lblDateCreator.Size = new System.Drawing.Size(39, 16);
+            this.lblDateCreator.Size = new System.Drawing.Size(38, 18);
             this.lblDateCreator.TabIndex = 26;
             this.lblDateCreator.Text = "Дата";
             // 
             // lblDescriptionCreator
             // 
             this.lblDescriptionCreator.AutoSize = true;
-            this.lblDescriptionCreator.Location = new System.Drawing.Point(399, 133);
+            this.lblDescriptionCreator.Location = new System.Drawing.Point(399, 150);
             this.lblDescriptionCreator.Name = "lblDescriptionCreator";
-            this.lblDescriptionCreator.Size = new System.Drawing.Size(72, 16);
+            this.lblDescriptionCreator.Size = new System.Drawing.Size(69, 18);
             this.lblDescriptionCreator.TabIndex = 27;
             this.lblDescriptionCreator.Text = "Описание";
             this.lblDescriptionCreator.Click += new System.EventHandler(this.lblDescriptionCreator_Click);
             // 
             // EventCreator
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 661);
+            this.ClientSize = new System.Drawing.Size(799, 744);
             this.Controls.Add(this.lblDescriptionCreator);
             this.Controls.Add(this.lblDateCreator);
             this.Controls.Add(this.lblCategoryCreator);
@@ -153,6 +151,7 @@
             this.Controls.Add(this.comboBoxCreator);
             this.Controls.Add(this.dateTimePickerCreator);
             this.Controls.Add(this.nameOfEventCreator);
+            this.Font = new System.Drawing.Font("Palatino Linotype", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Name = "EventCreator";
             this.Text = "Создание события";
             this.ResumeLayout(false);

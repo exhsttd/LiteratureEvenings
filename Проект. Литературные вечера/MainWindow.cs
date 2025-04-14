@@ -1,8 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Npgsql;
+using OfficeOpenXml;
 using Проект.Литературные_вечера.Data;
 
 namespace Проект.Литературные_вечера
@@ -24,10 +27,18 @@ namespace Проект.Литературные_вечера
             listViewEvents.View = View.Details;
             listViewEvents.FullRowSelect = true;
             listViewEvents.GridLines = true;
-            listViewEvents.Columns.Add("Название", 150);
-            listViewEvents.Columns.Add("Дата", 100);
-            listViewEvents.Columns.Add("Категория", 100);
-            listViewEvents.Columns.Add("Описание", 250);
+            var columns = new (string Text, int Width)[]
+            {
+              ("Название", 150),
+              ("Дата", 100),
+              ("Категория", 100),
+              ("Описание", 250)
+            };
+
+            foreach (var column in columns)
+            {
+                listViewEvents.Columns.Add(column.Text, column.Width);
+            }
 
             comboFilterParam.Visible = false;
         }
@@ -185,7 +196,14 @@ namespace Проект.Литературные_вечера
             {
                 if (form.ShowDialog() == DialogResult.OK)
                 {
+                    comboSortType.SelectedIndex = -1;
+                    comboFilterParam.SelectedIndex = -1;
+                    comboFilterParam.Visible = false;
                     LoadAllEvents();
+                    if (listViewEvents.Items.Count > 0)
+                    {
+                        listViewEvents.Items[listViewEvents.Items.Count - 1].EnsureVisible();
+                    }
                 }
             }
         }
@@ -219,6 +237,13 @@ namespace Проект.Литературные_вечера
             ApplyFilters();
         }
 
+      
+
+        private void listViewEvents_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void btnResetFilters_Click(object sender, EventArgs e)
         {
             comboSortType.SelectedIndex = -1;
@@ -229,9 +254,45 @@ namespace Проект.Литературные_вечера
             LoadAllEvents();
         }
 
-        private void listViewEvents_SelectedIndexChanged(object sender, EventArgs e)
+        private void btnGenerate_Click(object sender, EventArgs e)
         {
+            try
+            {
+                using (var excelPackage = new ExcelPackage())
+                {
+                    var column = excelPackage.Workbook.Worksheets.Add("События");
+                    string[] headers = { "Название", "Дата", "Категория", "Описание" };
 
+                    for (int col = 0; col < headers.Length; col++)
+                    {
+                        column.Cells[1, col + 1].Value = headers[col];
+                    }
+
+                    for (int row = 0; row < listViewEvents.Items.Count; row++)
+                    {
+                        for (int col = 0; col < listViewEvents.Items[row].SubItems.Count; col++)
+                        {
+                            column.Cells[row + 2, col + 1].Value = listViewEvents.Items[row].SubItems[col].Text;
+                        }
+                    }
+                    column.Cells[column.Dimension.Address].AutoFitColumns();
+                    using (var saveDialog = new SaveFileDialog())
+                    {
+                        saveDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
+                        saveDialog.FileName = $"Отчет_фильтрации_событий.xlsx";
+
+                        if (saveDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            excelPackage.SaveAs(new FileInfo(saveDialog.FileName));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

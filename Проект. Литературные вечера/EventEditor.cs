@@ -64,32 +64,26 @@ namespace Проект.Литературные_вечера
 
         private void loadBtnEditor_Click(object sender, EventArgs e)
         {
-            if (!ValidateFields())
-                return;
+            if (!ValidateFields()) return;
 
             try
             {
-                _currentEvent.Title = nameOfEventChange.Text;
-                _currentEvent.Category = cmbCategory.Text;
+                (_currentEvent.Title, _currentEvent.Category, _currentEvent.Description) =
+                    (nameOfEventChange.Text, cmbCategory.Text, infoOfEventChange.Text);
+
                 _currentEvent.Date = dateTimePickerEditor.Value.Date;
                 _currentEvent.Time = dateTimePickerEditor.Value.TimeOfDay;
-                _currentEvent.Description = infoOfEventChange.Text;
 
                 if (_dbContext.Entry(_currentEvent).State == EntityState.Modified)
-                {
                     _dbContext.SaveChanges();
-                }
-                else
-                {
-                    this.DialogResult = DialogResult.Cancel;
-                }
 
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка сохранения: {ex.Message}", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -106,6 +100,7 @@ namespace Проект.Литературные_вечера
                 {
                     _dbContext.Events.Remove(_currentEvent);
                     _dbContext.SaveChanges();
+                    this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 catch (Exception ex)

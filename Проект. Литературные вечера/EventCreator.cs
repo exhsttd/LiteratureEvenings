@@ -65,6 +65,7 @@ namespace Проект.Литературные_вечера
 
                 _dbContext.Events.Add(newEvent);
                 _dbContext.SaveChanges();
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             catch (Exception ex)
@@ -79,7 +80,7 @@ namespace Проект.Литературные_вечера
             ResetFieldStyles();
             bool isValid = true;
 
-            foreach (var control in new Control[] { nameOfEventCreator, infoOfEventCreator})
+            foreach (var control in new Control[] { nameOfEventCreator, infoOfEventCreator })
             {
                 if (string.IsNullOrWhiteSpace(control.Text))
                 {
@@ -105,42 +106,20 @@ namespace Проект.Литературные_вечера
             comboBoxCreator.BackColor = SystemColors.Window;
         }
 
-        private void infoOfEventCreator_TextChanged(object sender, EventArgs e)
+        private void AnyTextChanged(object sender, EventArgs e)
         {
-            infoOfEventCreator.ForeColor = SystemColors.WindowText;
-            infoOfEventCreator.BackColor = SystemColors.Window;
+            var control = (Control)sender;
+            control.ForeColor = SystemColors.WindowText;
+            control.BackColor = SystemColors.Window;
         }
 
-        private void nameOfEventCreator_TextChanged(object sender, EventArgs e)
+        private void AnyControlEnter(object sender, EventArgs e)
         {
-            nameOfEventCreator.ForeColor = SystemColors.WindowText;
-            nameOfEventCreator.BackColor = SystemColors.Window;
-        }
-
-        private void nameOfEventCreator_Enter(object sender, EventArgs e)
-        {
-            if (nameOfEventCreator.Text == "Заполните поле")
+            var control = (Control)sender;
+            if (control.Text == "Заполните поле")
             {
-                nameOfEventCreator.Text = "";
-                nameOfEventCreator.ForeColor = SystemColors.WindowText;
-            }
-        }
-
-        private void comboBoxCreator_Enter(object sender, EventArgs e)
-        {
-            if (comboBoxCreator.Text == "Заполните поле")
-            {
-                comboBoxCreator.Text = "";
-                comboBoxCreator.ForeColor = SystemColors.WindowText;
-            }
-        }
-
-        private void infoOfEventCreator_Enter(object sender, EventArgs e)
-        {
-            if (infoOfEventCreator.Text == "Заполните поле")
-            {
-                infoOfEventCreator.Text = "";
-                infoOfEventCreator.ForeColor = SystemColors.WindowText;
+                control.Text = "";
+                control.ForeColor = SystemColors.WindowText;
             }
         }
 

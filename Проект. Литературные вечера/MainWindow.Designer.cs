@@ -64,7 +64,7 @@
             // 
             this.labelMainWindow.AutoSize = true;
             this.labelMainWindow.BackColor = System.Drawing.Color.Silver;
-            this.labelMainWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelMainWindow.Font = new System.Drawing.Font("Palatino Linotype", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.labelMainWindow.Location = new System.Drawing.Point(64, 76);
             this.labelMainWindow.MinimumSize = new System.Drawing.Size(300, 40);
             this.labelMainWindow.Name = "labelMainWindow";
@@ -82,7 +82,7 @@
             this.labelSort.Name = "labelSort";
             this.labelSort.Size = new System.Drawing.Size(200, 30);
             this.labelSort.TabIndex = 6;
-            this.labelSort.Text = "Фильтровать события";
+            this.labelSort.Text = "Фильтровать события по";
             this.labelSort.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // comboSortType
@@ -97,7 +97,7 @@
             "По категории"});
             this.comboSortType.Location = new System.Drawing.Point(573, 172);
             this.comboSortType.Name = "comboSortType";
-            this.comboSortType.Size = new System.Drawing.Size(155, 24);
+            this.comboSortType.Size = new System.Drawing.Size(155, 26);
             this.comboSortType.TabIndex = 7;
             this.comboSortType.SelectedIndexChanged += new System.EventHandler(this.comboSortType_SelectedIndexChanged);
             // 
@@ -107,29 +107,30 @@
             this.comboFilterParam.FormattingEnabled = true;
             this.comboFilterParam.Location = new System.Drawing.Point(573, 202);
             this.comboFilterParam.Name = "comboFilterParam";
-            this.comboFilterParam.Size = new System.Drawing.Size(155, 24);
+            this.comboFilterParam.Size = new System.Drawing.Size(155, 26);
             this.comboFilterParam.TabIndex = 8;
             this.comboFilterParam.Visible = false;
             this.comboFilterParam.SelectedIndexChanged += new System.EventHandler(this.comboFilterParam_SelectedIndexChanged);
             // 
             // btnResetFilters
             // 
-            this.btnResetFilters.Location = new System.Drawing.Point(347, 515);
+            this.btnResetFilters.Location = new System.Drawing.Point(399, 515);
             this.btnResetFilters.Name = "btnResetFilters";
-            this.btnResetFilters.Size = new System.Drawing.Size(199, 27);
-            this.btnResetFilters.TabIndex = 10;
+            this.btnResetFilters.Size = new System.Drawing.Size(147, 27);
+            this.btnResetFilters.TabIndex = 12;
             this.btnResetFilters.Text = "Сбросить фильтры";
             this.btnResetFilters.UseVisualStyleBackColor = true;
             this.btnResetFilters.Click += new System.EventHandler(this.btnResetFilters_Click);
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(573, 232);
+            this.btnGenerate.Location = new System.Drawing.Point(573, 235);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(207, 27);
-            this.btnGenerate.TabIndex = 11;
-            this.btnGenerate.Text = "Сгенерировать отчет";
+            this.btnGenerate.Size = new System.Drawing.Size(197, 27);
+            this.btnGenerate.TabIndex = 13;
+            this.btnGenerate.Text = "Генерировать отчет ";
             this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
             // MainWindow
             // 
@@ -142,6 +143,7 @@
             this.Controls.Add(this.labelMainWindow);
             this.Controls.Add(this.btnCreateEvent);
             this.Controls.Add(this.listViewEvents);
+            this.Font = new System.Drawing.Font("Palatino Linotype", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Name = "MainWindow";
             this.Text = "Список событий";
             this.ResumeLayout(false);
