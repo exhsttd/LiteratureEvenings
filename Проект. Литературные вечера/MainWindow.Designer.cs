@@ -48,7 +48,6 @@
             this.listViewEvents.Size = new System.Drawing.Size(504, 367);
             this.listViewEvents.TabIndex = 1;
             this.listViewEvents.UseCompatibleStateImageBehavior = false;
-            this.listViewEvents.SelectedIndexChanged += new System.EventHandler(this.listViewEvents_SelectedIndexChanged);
             this.listViewEvents.DoubleClick += new System.EventHandler(this.listViewEvents_DoubleClick);
             // 
             // btnCreateEvent

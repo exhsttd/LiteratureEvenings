@@ -1,15 +1,21 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Проект.Литературные_вечера.Data;
+using Проект.Литературные_вечера.Validator4000;
 
 namespace Проект.Литературные_вечера
 {
+    /// <summary>
+    /// Окно создания события
+    /// </summary>
     public partial class EventCreator : Form
     {
         private readonly AppDbContext _dbContext;
 
+        /// <summary>
+        /// Инициализация нового экземпляра окна создания события
+        /// </summary>
         public EventCreator(AppDbContext dbContext)
         {
             InitializeComponent();
@@ -20,14 +26,12 @@ namespace Проект.Литературные_вечера
 
         private void LoadCategories()
         {
-
-                var categories = _dbContext.Events
-                    .Select(e => e.Category)
-                    .Distinct()
-                    .OrderBy(c => c)
-                    .ToArray();
-
-                comboBoxCreator.Items.AddRange(categories);
+           var categories = _dbContext.Events
+           .Select(e => e.Category)
+           .Distinct()
+           .OrderBy(c => c)
+           .ToArray();
+           comboBoxCreator.Items.AddRange(categories);
         }
 
         private void unloadBtnCreator_Click(object sender, EventArgs e)
@@ -43,7 +47,9 @@ namespace Проект.Литературные_вечера
         private void loadBtnCreator_Click(object sender, EventArgs e)
         {
             if (!ValidateFields())
+            {
                 return;
+            }    
 
             try
             {
@@ -63,67 +69,18 @@ namespace Проект.Литературные_вечера
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при создании события: {ex.Message}", "Ошибка",
+                MessageBox.Show($"Возникла ошибка при создании события. Пожалуйста, попробуйте позже.", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private bool ValidateFields()
         {
-            ResetFieldStyles();
-            bool isValid = true;
-
-            foreach (var control in new Control[] { nameOfEventCreator, infoOfEventCreator })
-            {
-                if (string.IsNullOrWhiteSpace(control.Text))
-                {
-                    control.BackColor = Color.LightPink;
-                    isValid = false;
-                }
-            }
-
-            if (string.IsNullOrWhiteSpace(comboBoxCreator.Text))
-            {
-                comboBoxCreator.BackColor = Color.LightPink;
-                MessageBox.Show("Пожалуйста, выберите категорию!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                isValid = false;
-            }
-
-            return isValid;
-        }
-
-        private void ResetFieldStyles()
-        {
-            nameOfEventCreator.BackColor = SystemColors.Window;
-            infoOfEventCreator.BackColor = SystemColors.Window;
-            comboBoxCreator.BackColor = SystemColors.Window;
-        }
-
-        private void AnyTextChanged(object sender, EventArgs e)
-        {
-            var control = (Control)sender;
-            control.ForeColor = SystemColors.WindowText;
-            control.BackColor = SystemColors.Window;
-        }
-
-        private void AnyControlEnter(object sender, EventArgs e)
-        {
-            var control = (Control)sender;
-            if (control.Text == "Заполните поле")
-            {
-                control.Text = "";
-                control.ForeColor = SystemColors.WindowText;
-            }
-        }
-
-        private void comboBoxCreator_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void lblDescriptionCreator_Click(object sender, EventArgs e)
-        {
-
+            return FormValidator.ValidateFormFields(
+                textControls: new Control[] { nameOfEventCreator, infoOfEventCreator },
+                comboBox: comboBoxCreator,
+                comboBoxError: "Необходимо выбрать категорию!"
+            );
         }
     }
 }

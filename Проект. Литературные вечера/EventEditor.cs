@@ -1,19 +1,25 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Проект.Литературные_вечера.Data;
 using System.Data.Entity;
+using Проект.Литературные_вечера.Validator4000;
 
 namespace Проект.Литературные_вечера
 {
+    /// <summary>
+    /// Окно редактирования события
+    /// </summary>
     public partial class EventEditor : Form
     {
-        private readonly int _eventId;
+        private readonly Guid _eventId;
         private readonly AppDbContext _dbContext;
         private readonly Event _currentEvent;
 
-        public EventEditor(int eventId, AppDbContext dbContext)
+        /// <summary>
+        /// Инициализация нового экземпляра окна редактирования события
+        /// </summary>
+        public EventEditor(Guid eventId, AppDbContext dbContext)
         {
             InitializeComponent();
             _eventId = eventId;
@@ -26,9 +32,9 @@ namespace Проект.Литературные_вечера
         private void InitializeForm()
         {
             dateTimePickerEditor.MinDate = DateTime.Today;
-            nameOfEventChange.Text = _currentEvent?.Title ?? "";
-            cmbCategory.Text = _currentEvent?.Category ?? "";
-            infoOfEventChange.Text = _currentEvent?.Description ?? "";
+            nameOfEventChange.Text = _currentEvent?.Title ?? String.Empty;
+            cmbCategory.Text = _currentEvent?.Category ?? String.Empty;
+            infoOfEventChange.Text = _currentEvent?.Description ?? String.Empty;
 
             if (_currentEvent != null)
             {
@@ -57,16 +63,20 @@ namespace Проект.Литературные_вечера
 
         private void loadBtnEditor_Click(object sender, EventArgs e)
         {
-            if (!ValidateFields()) return;
-                (_currentEvent.Title, _currentEvent.Category, _currentEvent.Description) =
-                    (nameOfEventChange.Text, cmbCategory.Text, infoOfEventChange.Text);
+            if (!ValidateFields())
+            {
+                return;
+            }
+            _currentEvent.Title = nameOfEventChange.Text;
+            _currentEvent.Category = cmbCategory.Text;
+            _currentEvent.Description = infoOfEventChange.Text;
+            _currentEvent.Date = dateTimePickerEditor.Value.Date;
+            _currentEvent.Time = dateTimePickerEditor.Value.TimeOfDay;
 
-                _currentEvent.Date = dateTimePickerEditor.Value.Date;
-                _currentEvent.Time = dateTimePickerEditor.Value.TimeOfDay;
-
-                if (_dbContext.Entry(_currentEvent).State == EntityState.Modified)
-                    _dbContext.SaveChanges();
-
+            if (_dbContext.Entry(_currentEvent).State == EntityState.Modified)
+            {
+                _dbContext.SaveChanges();
+            }
                 this.DialogResult = DialogResult.OK;
                 this.Close();
         }
@@ -89,7 +99,7 @@ namespace Проект.Литературные_вечера
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                    MessageBox.Show($"Возникла ошибка при удалении события. Пожалуйста, попробуйте позже.", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -116,41 +126,12 @@ namespace Проект.Литературные_вечера
 
         private bool ValidateFields()
         {
-            ResetFieldStyles();
-            bool isValid = true;
-
-            foreach (var control in new Control[] { nameOfEventChange, infoOfEventChange })
-            {
-                if (string.IsNullOrWhiteSpace(control.Text))
-                {
-                    control.BackColor = Color.LightPink;
-                    isValid = false;
-                }
-            }
-
-            if (string.IsNullOrWhiteSpace(cmbCategory.Text))
-            {
-                cmbCategory.BackColor = Color.LightPink;
-                MessageBox.Show("Пожалуйста, выберите категорию!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                isValid = false;
-            }
-
-            return isValid;
+            return FormValidator.ValidateFormFields(
+                textControls: new Control[] { nameOfEventChange, infoOfEventChange },
+                comboBox: cmbCategory,
+                comboBoxError: "Необходимо выбрать категорию!"
+            );
         }
 
-        private void ResetFieldStyles()
-        {
-            nameOfEventChange.BackColor = SystemColors.Window;
-            cmbCategory.BackColor = SystemColors.Window;
-            infoOfEventChange.BackColor = SystemColors.Window;
-        }
-
-        private void nameOfEventChange_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void dateTimePickerEditor_ValueChanged(object sender, EventArgs e)
-        {
-        }
     }
 }

@@ -54,7 +54,6 @@
             this.nameOfEventChange.Name = "nameOfEventChange";
             this.nameOfEventChange.Size = new System.Drawing.Size(284, 24);
             this.nameOfEventChange.TabIndex = 5;
-            this.nameOfEventChange.Click += new System.EventHandler(this.nameOfEventChange_Click);
             // 
             // dateTimePickerEditor
             // 
@@ -63,7 +62,6 @@
             this.dateTimePickerEditor.Name = "dateTimePickerEditor";
             this.dateTimePickerEditor.Size = new System.Drawing.Size(177, 25);
             this.dateTimePickerEditor.TabIndex = 6;
-            this.dateTimePickerEditor.ValueChanged += new System.EventHandler(this.dateTimePickerEditor_ValueChanged);
             // 
             // cmbCategory
             // 

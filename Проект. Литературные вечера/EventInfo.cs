@@ -1,61 +1,53 @@
 ﻿using System;
 using System.Windows.Forms;
-using Npgsql;
 using Проект.Литературные_вечера.Data;
 
 namespace Проект.Литературные_вечера
 {
+    /// <summary>
+    /// Окно информации о событии
+    /// </summary>
     public partial class EventInfo : Form
     {
-        private readonly int _eventId;
-        private readonly string _connectionString;
+        private readonly Guid _eventId;
 
-        public EventInfo(int eventId, string connectionString)
+        /// <summary>
+        /// Инициализация нового экземпляра окна информации о событии
+        /// </summary>
+        public EventInfo(Guid eventId, string connectionString)
         {
             InitializeComponent();
             _eventId = eventId;
-            _connectionString = connectionString;
             LoadEventData();
         }
 
         private void LoadEventData()
         {
-
-                using (var conn = new NpgsqlConnection(_connectionString))
+            using (var context = new AppDbContext())
+            {
+                var eventItem = context.Events.Find(_eventId);
+                if (eventItem != null)
                 {
-                    conn.Open();
-                    string sql = "SELECT title, category, date, description FROM events WHERE event_id = @id";
-
-                    using (var cmd = new NpgsqlCommand(sql, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", _eventId);
-
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                this.Text = reader["title"].ToString();
-                                lblTitle.Text = reader["title"].ToString();
-                                lblCategory.Text = reader["category"].ToString();
-                                lblDate.Text = ((DateTime)reader["date"]).ToString("dd.MM.yyyy");
-                                lblDescription.Text = reader["description"].ToString();
-                            }
-                        }
-                    }
+                    this.Text = eventItem.Title;
+                    lblTitle.Text = eventItem.Title;
+                    lblCategory.Text = eventItem.Category;
+                    lblDate.Text = eventItem.Date.ToString("dd.MM.yyyy");
+                    lblDescription.Text = eventItem.Description;
                 }
+            }
         }
 
 
         private void btnEdit_Click_1(object sender, EventArgs e)
         {
             using (var dbContext = new AppDbContext())
-            using (var editForm = new EventEditor(_eventId, dbContext)) 
+            using (var editForm = new EventEditor(_eventId, dbContext))
             {
                 var result = editForm.ShowDialog();
 
                 if (result == DialogResult.OK)
                 {
-                    LoadEventData();
+                    LoadEventData(); 
                     this.DialogResult = DialogResult.OK;
                 }
                 else if (result == DialogResult.Abort)
@@ -94,7 +86,7 @@ namespace Проект.Литературные_вечера
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка при удалении события: {ex.Message}", "Ошибка",
+                    MessageBox.Show($"Возникла ошибка при удалении события. Пожалуйста, попробуйте позже.", "Ошибка",
                                   MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }

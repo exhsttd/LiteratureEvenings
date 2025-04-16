@@ -86,7 +86,6 @@
             this.comboBoxCreator.Name = "comboBoxCreator";
             this.comboBoxCreator.Size = new System.Drawing.Size(177, 26);
             this.comboBoxCreator.TabIndex = 19;
-            this.comboBoxCreator.SelectedIndexChanged += new System.EventHandler(this.comboBoxCreator_SelectedIndexChanged);
             // 
             // dateTimePickerCreator
             // 
@@ -140,7 +139,6 @@
             this.lblDescriptionCreator.Size = new System.Drawing.Size(69, 18);
             this.lblDescriptionCreator.TabIndex = 27;
             this.lblDescriptionCreator.Text = "Описание";
-            this.lblDescriptionCreator.Click += new System.EventHandler(this.lblDescriptionCreator_Click);
             // 
             // EventCreator
             // 

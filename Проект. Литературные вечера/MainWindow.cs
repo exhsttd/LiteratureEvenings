@@ -1,19 +1,23 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using Npgsql;
 using OfficeOpenXml;
 using Проект.Литературные_вечера.Data;
 
 namespace Проект.Литературные_вечера
 {
+    /// <summary>
+    /// Главное окно приложения со списком всех событий и кнопками для их управления
+    /// </summary>
     public partial class MainWindow : Form
     {
         private string connectionString = "Host=localhost;Port=5433;Database=EventManagement;Username=postgres;Password=bednistudentkpfu11;";
 
+        /// <summary>
+        /// Инициализация нового экземпляра главного окна 
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -46,31 +50,29 @@ namespace Проект.Литературные_вечера
         {
             listViewEvents.Items.Clear();
 
-            using (var conn = new NpgsqlConnection(connectionString))
+            using (var db = new AppDbContext()) 
             {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand("SELECT event_id, title, date, category, description FROM events WHERE date >= @today ORDER BY date", conn))
+                var today = DateTime.Today;
+                var events = db.Events
+                    .Where(e => e.Date >= today)
+                    .OrderBy(e => e.Date)
+                    .ToList();
+
+                foreach (var ev in events)
                 {
-                    cmd.Parameters.AddWithValue("@today", DateTime.Today);
-                    using (var reader = cmd.ExecuteReader())
+                    var item = new ListViewItem(ev.Title);
+                    item.SubItems.Add(ev.Date.ToString("dd.MM.yyyy"));
+                    item.SubItems.Add(ev.Category);
+                    item.SubItems.Add(ev.Description);
+                    item.Tag = ev.EventId;
+
+                    if (ev.Date <= today.AddDays(7))
                     {
-                        while (reader.Read())
-                        {
-                            var item = new ListViewItem(reader["title"].ToString());
-                            item.SubItems.Add(((DateTime)reader["date"]).ToString("dd.MM.yyyy"));
-                            item.SubItems.Add(reader["category"].ToString());
-                            item.SubItems.Add(reader["description"].ToString());
-                            item.Tag = Convert.ToInt32(reader["event_id"]);
-
-                            if (((DateTime)reader["date"]) <= DateTime.Today.AddDays(7))
-                            {
-                                item.BackColor = Color.LightYellow;
-                                item.ToolTipText = "Ближайшее событие";
-                            }
-
-                            listViewEvents.Items.Add(item);
-                        }
+                        item.BackColor = Color.LightYellow;
+                        item.ToolTipText = "Ближайшее событие";
                     }
+
+                    listViewEvents.Items.Add(item);
                 }
             }
         }
@@ -84,12 +86,11 @@ namespace Проект.Литературные_вечера
 
             switch (comboSortType.SelectedIndex)
             {
-                case 0: 
+                case 0:
                     comboFilterParam.Items.Add("Ближайшие 7 дней");
                     comboFilterParam.Items.Add("Остальные события");
                     break;
-
-                case 1: 
+                case 1:
                     comboFilterParam.Items.Add("Выберите категорию");
                     using (var db = new AppDbContext())
                     {
@@ -116,48 +117,28 @@ namespace Проект.Литературные_вечера
         {
             listViewEvents.Items.Clear();
 
-            using (var conn = new NpgsqlConnection(connectionString))
+            using (var db = new AppDbContext())
             {
-                conn.Open();
-                NpgsqlCommand cmd;
+                IQueryable<Event> query = db.Events.Where(e => e.Date >= DateTime.Today);
 
                 switch (comboSortType.SelectedIndex)
                 {
-                    case 0: 
-                        if (comboFilterParam.SelectedIndex == 0) 
+                    case 0:
+                        if (comboFilterParam.SelectedIndex == 0)
                         {
-                            cmd = new NpgsqlCommand(
-                                "SELECT event_id, title, date, category, description FROM events " +
-                                "WHERE date BETWEEN @today AND @nextWeek " +
-                                "ORDER BY date", conn);
-                            cmd.Parameters.AddWithValue("@today", DateTime.Today);
-                            cmd.Parameters.AddWithValue("@nextWeek", DateTime.Today.AddDays(7));
+                            query = query.Where(e => e.Date <= DateTime.Today.AddDays(7));
                         }
                         else
                         {
-                            cmd = new NpgsqlCommand(
-                                "SELECT event_id, title, date, category, description FROM events " +
-                                "WHERE date > @nextWeek " +
-                                "ORDER BY date", conn);
-                            cmd.Parameters.AddWithValue("@nextWeek", DateTime.Today.AddDays(7));
+                            query = query.Where(e => e.Date > DateTime.Today.AddDays(7));
                         }
                         break;
 
-                    case 1: 
-                        if (comboFilterParam.SelectedIndex == 0) 
-                        {
-                            LoadAllEvents();
-                            return;
-                        }
-                        else
+                    case 1:
+                        if (comboFilterParam.SelectedIndex != 0)
                         {
                             string selectedCategory = comboFilterParam.SelectedItem.ToString();
-                            cmd = new NpgsqlCommand(
-                                "SELECT event_id, title, date, category, description FROM events " +
-                                "WHERE category = @category AND date >= @today " +
-                                "ORDER BY date", conn);
-                            cmd.Parameters.AddWithValue("@category", selectedCategory);
-                            cmd.Parameters.AddWithValue("@today", DateTime.Today);
+                            query = query.Where(e => e.Category == selectedCategory);
                         }
                         break;
 
@@ -166,24 +147,23 @@ namespace Проект.Литературные_вечера
                         return;
                 }
 
-                using (var reader = cmd.ExecuteReader())
+                var events = query.OrderBy(e => e.Date).ToList();
+
+                foreach (var ev in events)
                 {
-                    while (reader.Read())
+                    var item = new ListViewItem(ev.Title);
+                    item.SubItems.Add(ev.Date.ToString("dd.MM.yyyy"));
+                    item.SubItems.Add(ev.Category);
+                    item.SubItems.Add(ev.Description);
+                    item.Tag = ev.EventId;
+
+                    if (ev.Date <= DateTime.Today.AddDays(7))
                     {
-                        var item = new ListViewItem(reader["title"].ToString());
-                        item.SubItems.Add(((DateTime)reader["date"]).ToString("dd.MM.yyyy"));
-                        item.SubItems.Add(reader["category"].ToString());
-                        item.SubItems.Add(reader["description"].ToString());
-                        item.Tag = Convert.ToInt32(reader["event_id"]);
-
-                        if (((DateTime)reader["date"]) <= DateTime.Today.AddDays(7))
-                        {
-                            item.BackColor = Color.LightYellow;
-                            item.ToolTipText = "Ближайшее событие";
-                        }
-
-                        listViewEvents.Items.Add(item);
+                        item.BackColor = Color.LightYellow;
+                        item.ToolTipText = "Ближайшее событие";
                     }
+
+                    listViewEvents.Items.Add(item);
                 }
             }
         }
@@ -210,7 +190,7 @@ namespace Проект.Литературные_вечера
         private void listViewEvents_DoubleClick(object sender, EventArgs e)
         {
 
-            int eventId = (int)listViewEvents.SelectedItems[0].Tag;
+            Guid eventId = (Guid)listViewEvents.SelectedItems[0].Tag;
             using (var infoForm = new EventInfo(eventId, connectionString))
             {
                 var result = infoForm.ShowDialog();
@@ -218,7 +198,7 @@ namespace Проект.Литературные_вечера
                 {
                     var itemToRemove = listViewEvents.Items
                         .Cast<ListViewItem>()
-                        .FirstOrDefault(item => item.Tag != null && (int)item.Tag == eventId);
+                        .FirstOrDefault(item => item.Tag != null && (Guid)item.Tag == eventId);
 
                     if (itemToRemove != null)
                     {
@@ -236,13 +216,6 @@ namespace Проект.Литературные_вечера
             ApplyFilters();
         }
 
-      
-
-        private void listViewEvents_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnResetFilters_Click(object sender, EventArgs e)
         {
             comboSortType.SelectedIndex = -1;
@@ -256,35 +229,35 @@ namespace Проект.Литературные_вечера
         private void btnGenerate_Click(object sender, EventArgs e)
         {
 
-                using (var excelPackage = new ExcelPackage())
+            using (var excelPackage = new ExcelPackage())
+            {
+                var column = excelPackage.Workbook.Worksheets.Add("События");
+                string[] headers = { "Название", "Дата", "Категория", "Описание" };
+
+                for (int col = 0; col < headers.Length; col++)
                 {
-                    var column = excelPackage.Workbook.Worksheets.Add("События");
-                    string[] headers = { "Название", "Дата", "Категория", "Описание" };
+                    column.Cells[1, col + 1].Value = headers[col];
+                }
 
-                    for (int col = 0; col < headers.Length; col++)
+                for (int row = 0; row < listViewEvents.Items.Count; row++)
+                {
+                    for (int col = 0; col < listViewEvents.Items[row].SubItems.Count; col++)
                     {
-                        column.Cells[1, col + 1].Value = headers[col];
+                        column.Cells[row + 2, col + 1].Value = listViewEvents.Items[row].SubItems[col].Text;
                     }
+                }
+                column.Cells[column.Dimension.Address].AutoFitColumns();
+                using (var saveDialog = new SaveFileDialog())
+                {
+                    saveDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
+                    saveDialog.FileName = $"Отчет_фильтрации_событий.xlsx";
 
-                    for (int row = 0; row < listViewEvents.Items.Count; row++)
+                    if (saveDialog.ShowDialog() == DialogResult.OK)
                     {
-                        for (int col = 0; col < listViewEvents.Items[row].SubItems.Count; col++)
-                        {
-                            column.Cells[row + 2, col + 1].Value = listViewEvents.Items[row].SubItems[col].Text;
-                        }
-                    }
-                    column.Cells[column.Dimension.Address].AutoFitColumns();
-                    using (var saveDialog = new SaveFileDialog())
-                    {
-                        saveDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
-                        saveDialog.FileName = $"Отчет_фильтрации_событий.xlsx";
-
-                        if (saveDialog.ShowDialog() == DialogResult.OK)
-                        {
-                            excelPackage.SaveAs(new FileInfo(saveDialog.FileName));
-                        }
+                        excelPackage.SaveAs(new FileInfo(saveDialog.FileName));
                     }
                 }
             }
         }
     }
+}

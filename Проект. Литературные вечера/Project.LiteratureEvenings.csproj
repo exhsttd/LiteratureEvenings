@@ -142,6 +142,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Validator4000.cs" />
     <Compile Include="Data\AppDbContext.cs" />
     <Compile Include="Data\Event.cs" />
     <Compile Include="EventCreator.cs">
@@ -217,16 +218,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\фон11.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\library-small.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\library-small1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.manifest" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
