@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows.Forms;
 using Проект.Литературные_вечера.Data;
-using Проект.Литературные_вечера.Validator4000;
 
 namespace Проект.Литературные_вечера
 {
@@ -76,10 +75,9 @@ namespace Проект.Литературные_вечера
 
         private bool ValidateFields()
         {
-            return FormValidator.ValidateFormFields(
-                textControls: new Control[] { nameOfEventCreator, infoOfEventCreator },
-                comboBox: comboBoxCreator,
-                comboBoxError: "Необходимо выбрать категорию!"
+            return FormValidator.ValidateCurrentForm(
+                new[] { nameOfEventCreator, infoOfEventCreator },
+                comboBoxCreator
             );
         }
     }

@@ -43,9 +43,9 @@
             // 
             this.listViewEvents.BackColor = System.Drawing.Color.AntiqueWhite;
             this.listViewEvents.HideSelection = false;
-            this.listViewEvents.Location = new System.Drawing.Point(42, 129);
+            this.listViewEvents.Location = new System.Drawing.Point(32, 129);
             this.listViewEvents.Name = "listViewEvents";
-            this.listViewEvents.Size = new System.Drawing.Size(504, 367);
+            this.listViewEvents.Size = new System.Drawing.Size(522, 367);
             this.listViewEvents.TabIndex = 1;
             this.listViewEvents.UseCompatibleStateImageBehavior = false;
             this.listViewEvents.DoubleClick += new System.EventHandler(this.listViewEvents_DoubleClick);
@@ -148,7 +148,7 @@
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.BackgroundImage = global::Проект.Литературные_вечера.Properties.Resources.library_small1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(799, 661);
+            this.ClientSize = new System.Drawing.Size(838, 679);
             this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.btnResetFilters);
             this.Controls.Add(this.comboFilterParam);

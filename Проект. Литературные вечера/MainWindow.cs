@@ -79,7 +79,10 @@ namespace Проект.Литературные_вечера
 
         private void comboSortType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboSortType.SelectedIndex == -1) return;
+            if (comboSortType.SelectedIndex == -1)
+            {
+                return;
+            }
 
             comboFilterParam.Items.Clear();
             comboFilterParam.Visible = true;
@@ -119,18 +122,20 @@ namespace Проект.Литературные_вечера
 
             using (var db = new AppDbContext())
             {
-                IQueryable<Event> query = db.Events.Where(e => e.Date >= DateTime.Today);
+                var today = DateTime.Today;
+                IQueryable<Event> query = db.Events.Where(e => e.Date >= today);
 
                 switch (comboSortType.SelectedIndex)
                 {
                     case 0:
+                        var oneWeekLater = today.AddDays(7); 
                         if (comboFilterParam.SelectedIndex == 0)
                         {
-                            query = query.Where(e => e.Date <= DateTime.Today.AddDays(7));
+                            query = query.Where(e => e.Date <= oneWeekLater);
                         }
                         else
                         {
-                            query = query.Where(e => e.Date > DateTime.Today.AddDays(7));
+                            query = query.Where(e => e.Date > oneWeekLater);
                         }
                         break;
 
@@ -157,7 +162,7 @@ namespace Проект.Литературные_вечера
                     item.SubItems.Add(ev.Description);
                     item.Tag = ev.EventId;
 
-                    if (ev.Date <= DateTime.Today.AddDays(7))
+                    if (ev.Date <= today.AddDays(7))
                     {
                         item.BackColor = Color.LightYellow;
                         item.ToolTipText = "Ближайшее событие";

@@ -2,8 +2,6 @@
 using System.Linq;
 using System.Windows.Forms;
 using Проект.Литературные_вечера.Data;
-using System.Data.Entity;
-using Проект.Литературные_вечера.Validator4000;
 
 namespace Проект.Литературные_вечера
 {
@@ -54,8 +52,6 @@ namespace Проект.Литературные_вечера
 
         private void LoadEventData()
         {
-            try
-            {
                 var categories = _dbContext.Events
                     .Select(e => e.Category)
                     .Where(c => !string.IsNullOrEmpty(c))
@@ -65,12 +61,7 @@ namespace Проект.Литературные_вечера
 
                 cmbCategory.Items.AddRange(categories);
                 cmbCategory.SelectedItem = _currentEvent.Category;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Событие не удалось удалить. Попробуйте позже.", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
         }
 
         private void loadBtnEditor_Click(object sender, EventArgs e)
@@ -80,8 +71,6 @@ namespace Проект.Литературные_вечера
                 return;
             }
 
-            try
-            {
                 _currentEvent.Title = nameOfEventChange.Text.Trim();
                 _currentEvent.Category = cmbCategory.Text.Trim();
                 _currentEvent.Description = infoOfEventChange.Text.Trim();
@@ -95,12 +84,7 @@ namespace Проект.Литературные_вечера
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Событие не удалось удалить. Попробуйте позже.", "Ошибка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -145,10 +129,9 @@ namespace Проект.Литературные_вечера
 
         private bool ValidateFields()
         {
-            return FormValidator.ValidateFormFields(
-                textControls: new Control[] { nameOfEventChange, infoOfEventChange },
-                comboBox: cmbCategory,
-                comboBoxError: "Необходимо выбрать категорию!"
+            return FormValidator.ValidateCurrentForm(
+                new[] { nameOfEventChange, infoOfEventChange },
+                cmbCategory
             );
         }
     }
