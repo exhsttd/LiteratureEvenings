@@ -66,7 +66,6 @@ namespace Tests
         {
 
             event1.Title = "Чаепитие";
-            //Assert.ThrowsException<ArgumentException>(() => event1.Title);
 
             Assert.AreEqual("Чаепитие", event1.Title);
         }
@@ -117,17 +116,13 @@ namespace Tests
 
         public void LoadCategories_ShouldLoadDistinctCategoriesFromDatabase()
         {
-            // Arrange
-            // Добавим тестовые данные в базу данных
             _dbContext.Events.Add(new Event { Category = "Category1" });
             _dbContext.Events.Add(new Event { Category = "Category2" });
-            _dbContext.Events.Add(new Event { Category = "Category1" }); // Дубликат
+            _dbContext.Events.Add(new Event { Category = "Category1" }); 
             _dbContext.SaveChanges();
 
-            // Act
             _eventCreator.LoadCategories();
 
-            // Assert
             Assert.AreEqual(2, _eventCreator.comboBoxCreator.Items.Count);
             Assert.IsTrue(_eventCreator.comboBoxCreator.Items.Contains("Category1"));
             Assert.IsTrue(_eventCreator.comboBoxCreator.Items.Contains("Category2"));

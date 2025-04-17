@@ -23,7 +23,7 @@ namespace Проект.Литературные_вечера
             LoadCategories();
         }
 
-        private void LoadCategories()
+        public void LoadCategories()
         {
            var categories = _dbContext.Events
            .Select(e => e.Category)
