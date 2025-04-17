@@ -149,7 +149,7 @@
             this.BackColor = System.Drawing.Color.NavajoWhite;
             this.BackgroundImage = global::Проект.Литературные_вечера.Properties.Resources.library_small1;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(799, 661);
+            this.ClientSize = new System.Drawing.Size(803, 660);
             this.Controls.Add(this.lblDescriptionCreator);
             this.Controls.Add(this.lblDateCreator);
             this.Controls.Add(this.lblCategoryCreator);
@@ -161,7 +161,10 @@
             this.Controls.Add(this.dateTimePickerCreator);
             this.Controls.Add(this.nameOfEventCreator);
             this.Font = new System.Drawing.Font("Palatino Linotype", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "EventCreator";
             this.Text = "Создание события";
             this.ResumeLayout(false);
@@ -174,7 +177,7 @@
         private System.Windows.Forms.Button unloadBtnCreator;
         private System.Windows.Forms.Button loadBtnCreator;
         private System.Windows.Forms.TextBox infoOfEventCreator;
-        private System.Windows.Forms.ComboBox comboBoxCreator;
+        public System.Windows.Forms.ComboBox comboBoxCreator;
         private System.Windows.Forms.DateTimePicker dateTimePickerCreator;
         private System.Windows.Forms.TextBox nameOfEventCreator;
         private System.Windows.Forms.Label lblNameCreator;

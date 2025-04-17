@@ -46,10 +46,10 @@ namespace Проект.Литературные_вечера
 
         private void loadBtnCreator_Click(object sender, EventArgs e)
         {
-            if (!ValidateFields())
+            if(!ValidateFields())
             {
                 return;
-            }    
+            }
 
             try
             {

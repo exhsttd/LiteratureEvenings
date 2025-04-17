@@ -16,8 +16,8 @@ namespace Проект.Литературные_вечера.Validator4000
         {
             ResetControlStyles(textControls);
             ResetControlStyles(new Control[] { comboBox });
-
             var isValid = true;
+            var comboBoxIsEmpty = false;
 
             foreach (var control in textControls)
             {
@@ -28,17 +28,25 @@ namespace Проект.Литературные_вечера.Validator4000
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(comboBox.Text))
+            if (comboBox.SelectedItem == null)
             {
                 SetInvalidStyle(comboBox);
-                ShowErrorMessage(comboBoxError);
                 isValid = false;
+                comboBoxIsEmpty = true;
             }
+
+            if (comboBoxIsEmpty)
+            {
+                MessageBox.Show(comboBoxError, "Ошибка",
+                             MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
 
             return isValid;
         }
 
-        private static void ResetControlStyles(Control[] controls)
+        public static void ResetControlStyles(Control[] controls)
         {
             foreach (var control in controls)
             {
@@ -51,9 +59,6 @@ namespace Проект.Литературные_вечера.Validator4000
             control.BackColor = Color.LightPink;
         }
 
-        private static void ShowErrorMessage(string message)
-        {
-            MessageBox.Show(message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        
     }
 }

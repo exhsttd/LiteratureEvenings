@@ -25,6 +25,16 @@ namespace Проект.Литературные_вечера
             _eventId = eventId;
             _dbContext = dbContext;
             _currentEvent = _dbContext.Events.Find(eventId);
+
+            if (_currentEvent == null)
+            {
+                MessageBox.Show("Событие не найдено", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.DialogResult = DialogResult.Cancel;
+                this.Close();
+                return;
+            }
+
             InitializeForm();
             LoadEventData();
         }
@@ -32,33 +42,35 @@ namespace Проект.Литературные_вечера
         private void InitializeForm()
         {
             dateTimePickerEditor.MinDate = DateTime.Today;
-            nameOfEventChange.Text = _currentEvent?.Title ?? String.Empty;
-            cmbCategory.Text = _currentEvent?.Category ?? String.Empty;
-            infoOfEventChange.Text = _currentEvent?.Description ?? String.Empty;
+            nameOfEventChange.Text = _currentEvent.Title ?? string.Empty;
+            cmbCategory.Text = _currentEvent.Category ?? string.Empty;
+            infoOfEventChange.Text = _currentEvent.Description ?? string.Empty;
 
-            if (_currentEvent != null)
+            if (_currentEvent.Date != default && _currentEvent.Time != default)
             {
-                dateTimePickerEditor.Value = _currentEvent.Date + _currentEvent.Time;
+                dateTimePickerEditor.Value = _currentEvent.Date.Add(_currentEvent.Time);
             }
         }
 
         private void LoadEventData()
         {
-
-                if (_currentEvent == null)
-                {
-                    MessageBox.Show("Событие не найдено", "Ошибка",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                    return;
-                }
+            try
+            {
                 var categories = _dbContext.Events
                     .Select(e => e.Category)
+                    .Where(c => !string.IsNullOrEmpty(c))
                     .Distinct()
                     .OrderBy(c => c)
                     .ToArray();
 
                 cmbCategory.Items.AddRange(categories);
+                cmbCategory.SelectedItem = _currentEvent.Category;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Событие не удалось удалить. Попробуйте позже.", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void loadBtnEditor_Click(object sender, EventArgs e)
@@ -67,18 +79,28 @@ namespace Проект.Литературные_вечера
             {
                 return;
             }
-            _currentEvent.Title = nameOfEventChange.Text;
-            _currentEvent.Category = cmbCategory.Text;
-            _currentEvent.Description = infoOfEventChange.Text;
-            _currentEvent.Date = dateTimePickerEditor.Value.Date;
-            _currentEvent.Time = dateTimePickerEditor.Value.TimeOfDay;
 
-            if (_dbContext.Entry(_currentEvent).State == EntityState.Modified)
+            try
             {
+                _currentEvent.Title = nameOfEventChange.Text.Trim();
+                _currentEvent.Category = cmbCategory.Text.Trim();
+                _currentEvent.Description = infoOfEventChange.Text.Trim();
+                _currentEvent.Date = dateTimePickerEditor.Value.Date;
+                _currentEvent.Time = dateTimePickerEditor.Value.TimeOfDay;
+
                 _dbContext.SaveChanges();
-            }
+
+                MessageBox.Show("Изменения сохранены успешно!", "Успех",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 this.DialogResult = DialogResult.OK;
                 this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Событие не удалось удалить. Попробуйте позже.", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -94,12 +116,16 @@ namespace Проект.Литературные_вечера
                 {
                     _dbContext.Events.Remove(_currentEvent);
                     _dbContext.SaveChanges();
+
+                    MessageBox.Show("Событие удалено успешно!", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Возникла ошибка при удалении события. Пожалуйста, попробуйте позже.", "Ошибка",
+                    MessageBox.Show($"Событие не удалось удалить. Попробуйте позже.", "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -112,13 +138,6 @@ namespace Проект.Литературные_вечера
 
             if (result == DialogResult.Yes)
             {
-                var entry = _dbContext.Entry(_currentEvent);
-                if (entry.State == EntityState.Modified)
-                {
-                    entry.CurrentValues.SetValues(entry.OriginalValues);
-                    entry.State = EntityState.Unchanged;
-                }
-
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
             }
@@ -132,6 +151,5 @@ namespace Проект.Литературные_вечера
                 comboBoxError: "Необходимо выбрать категорию!"
             );
         }
-
     }
 }
